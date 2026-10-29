@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Inscriptos')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header('actividades')}"></header>
+<main class="contenedor">
+    <div class="barra-titulo">
+        <h1>Inscriptos en <span th:text="${actividad.nombre}">Fútbol infantil</span></h1>
+        <a class="boton" th:href="@{/inscripciones/nueva(actividadId=${actividad.id})}">Inscribir socio</a>
+    </div>
+    <div th:replace="~{fragments/layout :: mensajes}"></div>
+
+    <p class="resumen">
+        <strong th:text="${#lists.size(inscripciones)}">0</strong> inscriptos activos de
+        <strong th:text="${actividad.cupoMaximo}">40</strong> lugares ·
+        <span th:if="${actividad.cupoDisponible > 0}" class="etiqueta ok"
+              th:text="'Cupo disponible: ' + ${actividad.cupoDisponible}">Cupo disponible: 10</span>
+        <span th:unless="${actividad.cupoDisponible > 0}" class="etiqueta error">Sin cupo</span>
+    </p>
+
+    <table class="tabla">
+        <thead>
+        <tr>
+            <th>DNI</th>
+            <th>Apellido y nombre</th>
+            <th>Fecha de inscripción</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="i : ${inscripciones}">
+            <td th:text="${i.socio.dni}">30111222</td>
+            <td th:text="${i.socio.apellido} + ', ' + ${i.socio.nombre}">Pérez, Ana</td>
+            <td th:text="${#temporals.format(i.fechaInscripcion, 'dd/MM/yyyy')}">01/09/2026</td>
+            <td class="acciones">
+                <form th:action="@{/inscripciones/{id}/baja(id=${i.id})}" method="post"
+                      onsubmit="return confirm('¿Dar de baja esta inscripción?');">
+                    <button type="submit" class="enlace peligro">Dar de baja</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(inscripciones)}">
+            <td colspan="4">Todavía no hay inscriptos activos.</td>
+        </tr>
+        </tbody>
+    </table>
+    <p><a th:href="@{/actividades}">Volver a actividades</a></p>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

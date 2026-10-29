@@ -44,6 +44,7 @@ public class ActividadService {
 
     @Transactional
     public Actividad crear(Actividad actividad) {
+        validarRangoDeEdades(actividad);
         actividad.setId(null);
         return actividadRepository.save(actividad);
     }
@@ -51,6 +52,7 @@ public class ActividadService {
     @Transactional
     public Actividad actualizar(Long id, Actividad datos) {
         Actividad existente = buscarPorId(id);
+        validarRangoDeEdades(datos);
         existente.setNombre(datos.getNombre());
         existente.setDisciplina(datos.getDisciplina());
         existente.setProfesor(datos.getProfesor());
@@ -76,6 +78,13 @@ public class ActividadService {
     /** Places left = cupoMaximo minus ACTIVA inscriptions (BAJA ones free their place). */
     public int cupoDisponible(Actividad actividad) {
         return actividad.getCupoMaximo() - (int) contarActivas(actividad);
+    }
+
+    private void validarRangoDeEdades(Actividad actividad) {
+        if (actividad.getEdadMinima() != null && actividad.getEdadMaxima() != null
+                && actividad.getEdadMinima() > actividad.getEdadMaxima()) {
+            throw new ReglaNegocioException("RANGO_EDAD", "La edad mínima no puede ser mayor que la edad máxima");
+        }
     }
 
     private ActividadDto conCupo(Actividad actividad) {

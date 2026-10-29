@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Inscribir socio')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header('inscripciones')}"></header>
+<main class="contenedor">
+    <h1>Inscribir socio a una actividad</h1>
+    <div th:replace="~{fragments/layout :: mensajes}"></div>
+
+    <form class="formulario" th:action="@{/inscripciones}" method="post">
+        <div class="campo">
+            <label for="socioId">Socio</label>
+            <select id="socioId" name="socioId" required>
+                <option value="">Elegir socio</option>
+                <option th:each="s : ${socios}" th:value="${s.id}" th:selected="${s.id == socioId}"
+                        th:text="${s.apellido} + ', ' + ${s.nombre} + ' (DNI ' + ${s.dni} + ')'">Pérez, Ana</option>
+            </select>
+        </div>
+        <div class="campo">
+            <label for="actividadId">Actividad</label>
+            <select id="actividadId" name="actividadId" required>
+                <option value="">Elegir actividad</option>
+                <option th:each="a : ${actividades}" th:value="${a.id}" th:selected="${a.id == actividadId}"
+                        th:text="${a.nombre} + ' (cupo disponible: ' + ${a.cupoDisponible} + ')'">Yoga</option>
+            </select>
+        </div>
+        <div class="botonera">
+            <button type="submit" class="boton">Inscribir</button>
+            <a class="boton secundario" th:href="@{/actividades}">Cancelar</a>
+        </div>
+    </form>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

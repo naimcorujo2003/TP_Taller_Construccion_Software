@@ -106,4 +106,13 @@ class ActividadServiceTest {
         assertThatThrownBy(() -> service.actualizar(99L, new Actividad()))
                 .isInstanceOf(RecursoNoEncontradoException.class);
     }
+
+    @Test
+    void crearRechazaEdadMinimaMayorQueLaMaxima() {
+        yoga.setEdadMinima(30);
+        yoga.setEdadMaxima(20);
+
+        assertThatThrownBy(() -> service.crear(yoga)).isInstanceOf(ReglaNegocioException.class);
+        verify(actividadRepository, never()).save(yoga);
+    }
 }

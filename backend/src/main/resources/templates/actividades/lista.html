@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Actividades')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header('actividades')}"></header>
+<main class="contenedor">
+    <div class="barra-titulo">
+        <h1>Actividades</h1>
+        <a class="boton" th:href="@{/actividades/nueva}">Nueva actividad</a>
+    </div>
+    <div th:replace="~{fragments/layout :: mensajes}"></div>
+
+    <form class="filtro" method="get" th:action="@{/actividades}">
+        <label for="disciplina">Disciplina</label>
+        <input type="text" id="disciplina" name="disciplina" th:value="${disciplina}" placeholder="Ej: Fútbol">
+        <button type="submit" class="boton secundario">Filtrar</button>
+        <a th:if="${disciplina}" th:href="@{/actividades}">Quitar filtro</a>
+    </form>
+
+    <table class="tabla">
+        <thead>
+        <tr>
+            <th>Actividad</th>
+            <th>Disciplina</th>
+            <th>Días y horario</th>
+            <th>Edades</th>
+            <th>Cuota</th>
+            <th>Profesor/a</th>
+            <th>Cupo disponible</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="a : ${actividades}">
+            <td th:text="${a.nombre}">Fútbol infantil</td>
+            <td th:text="${a.disciplina}">Fútbol</td>
+            <td th:text="${a.dias} + ' ' + ${a.horario}">Lun y Mié 18:00</td>
+            <td th:text="${a.edadMinima} + ' a ' + ${a.edadMaxima}">6 a 12</td>
+            <td th:text="'$ ' + ${#numbers.formatDecimal(a.cuotaMensual, 1, 'POINT', 0, 'COMMA')}">$ 18.000</td>
+            <td th:text="${a.profesor}">Profesor</td>
+            <td>
+                <span th:if="${a.cupoDisponible > 0}" class="etiqueta ok"
+                      th:text="${a.cupoDisponible} + ' de ' + ${a.cupoMaximo}">10 de 40</span>
+                <span th:unless="${a.cupoDisponible > 0}" class="etiqueta error">Sin cupo</span>
+            </td>
+            <td class="acciones">
+                <a th:href="@{/actividades/{id}/inscriptos(id=${a.id})}">Inscriptos</a>
+                <a th:href="@{/actividades/{id}/editar(id=${a.id})}">Editar</a>
+                <form th:action="@{/actividades/{id}/eliminar(id=${a.id})}" method="post"
+                      onsubmit="return confirm('¿Eliminar la actividad?');">
+                    <button type="submit" class="enlace peligro">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(actividades)}">
+            <td colspan="8">No hay actividades para mostrar.</td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

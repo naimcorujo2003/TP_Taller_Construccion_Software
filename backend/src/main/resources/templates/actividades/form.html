@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${titulo})}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header('actividades')}"></header>
+<main class="contenedor">
+    <h1 th:text="${titulo}">Nueva actividad</h1>
+
+    <form class="formulario" th:action="@{${accion}}" th:object="${actividad}" method="post">
+        <p class="mensaje error" th:if="${#fields.hasGlobalErrors()}" th:each="e : ${#fields.globalErrors()}"
+           th:text="${e}"></p>
+
+        <div class="campo">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" th:field="*{nombre}">
+            <span class="error-campo" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
+        </div>
+        <div class="campo">
+            <label for="disciplina">Disciplina</label>
+            <input type="text" id="disciplina" th:field="*{disciplina}">
+            <span class="error-campo" th:if="${#fields.hasErrors('disciplina')}" th:errors="*{disciplina}"></span>
+        </div>
+        <div class="campo">
+            <label for="profesor">Profesor/a</label>
+            <input type="text" id="profesor" th:field="*{profesor}">
+            <span class="error-campo" th:if="${#fields.hasErrors('profesor')}" th:errors="*{profesor}"></span>
+        </div>
+        <div class="campo">
+            <label for="dias">Días</label>
+            <input type="text" id="dias" th:field="*{dias}" placeholder="Lun y Mié">
+            <span class="error-campo" th:if="${#fields.hasErrors('dias')}" th:errors="*{dias}"></span>
+        </div>
+        <div class="campo">
+            <label for="horario">Horario</label>
+            <input type="text" id="horario" th:field="*{horario}" placeholder="18:00">
+            <span class="error-campo" th:if="${#fields.hasErrors('horario')}" th:errors="*{horario}"></span>
+        </div>
+        <div class="campo">
+            <label for="edadMinima">Edad mínima</label>
+            <input type="number" id="edadMinima" th:field="*{edadMinima}" min="0">
+            <span class="error-campo" th:if="${#fields.hasErrors('edadMinima')}" th:errors="*{edadMinima}"></span>
+        </div>
+        <div class="campo">
+            <label for="edadMaxima">Edad máxima</label>
+            <input type="number" id="edadMaxima" th:field="*{edadMaxima}" min="0">
+            <span class="error-campo" th:if="${#fields.hasErrors('edadMaxima')}" th:errors="*{edadMaxima}"></span>
+        </div>
+        <div class="campo">
+            <label for="cupoMaximo">Cupo máximo</label>
+            <input type="number" id="cupoMaximo" th:field="*{cupoMaximo}" min="1">
+            <span class="error-campo" th:if="${#fields.hasErrors('cupoMaximo')}" th:errors="*{cupoMaximo}"></span>
+        </div>
+        <div class="campo">
+            <label for="cuotaMensual">Cuota mensual ($)</label>
+            <input type="number" id="cuotaMensual" th:field="*{cuotaMensual}" min="0" step="0.01">
+            <span class="error-campo" th:if="${#fields.hasErrors('cuotaMensual')}" th:errors="*{cuotaMensual}"></span>
+        </div>
+
+        <div class="botonera">
+            <button type="submit" class="boton">Guardar</button>
+            <a class="boton secundario" th:href="@{/actividades}">Cancelar</a>
+        </div>
+    </form>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

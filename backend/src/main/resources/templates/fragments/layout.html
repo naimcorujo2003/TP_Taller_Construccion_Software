@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<!-- Reusable pieces included by every page with th:replace -->
+<head th:fragment="head(titulo)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${titulo} + ' · SocioClub'">SocioClub</title>
+    <link rel="stylesheet" th:href="@{/css/backoffice.css}">
+</head>
+<body>
+<header th:fragment="header(activo)" class="cabecera">
+    <div class="contenedor cabecera-contenido">
+        <a class="marca" th:href="@{/actividades}">SocioClub <span>Los Algarrobos</span></a>
+        <nav>
+            <a th:href="@{/actividades}" th:classappend="${activo == 'actividades'} ? 'activo'">Actividades</a>
+            <a th:href="@{/socios}" th:classappend="${activo == 'socios'} ? 'activo'">Socios</a>
+            <a th:href="@{/inscripciones/nueva}" th:classappend="${activo == 'inscripciones'} ? 'activo'">Inscribir</a>
+        </nav>
+    </div>
+</header>
+
+<div th:fragment="mensajes">
+    <p class="mensaje ok" th:if="${ok}" th:text="${ok}"></p>
+    <p class="mensaje error" th:if="${error}" th:text="${error}"></p>
+</div>
+
+<footer th:fragment="footer" class="pie">
+    <div class="contenedor">Club Social y Deportivo Los Algarrobos · Sistema de secretaría</div>
+</footer>
+</body>
+</html>
