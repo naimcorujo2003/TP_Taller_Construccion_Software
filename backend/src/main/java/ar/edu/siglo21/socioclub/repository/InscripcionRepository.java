@@ -8,8 +8,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface InscripcionRepository extends JpaRepository<Inscripcion, Long> {
+
+    // Loads socio and actividad together with the inscripcion (used by the baja, outside any session)
+    @Override
+    @EntityGraph(attributePaths = {"socio", "actividad"})
+    Optional<Inscripcion> findById(Long id);
 
     // The entity graph loads the activity in the same query (relations are LAZY)
     @EntityGraph(attributePaths = "actividad")
