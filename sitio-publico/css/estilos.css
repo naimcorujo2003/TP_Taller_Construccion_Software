@@ -1,0 +1,760 @@
+/* ==========================================================================
+   Club Los Algarrobos - hoja de estilos única del sitio público
+   ========================================================================== */
+
+/* ---------- Variables ---------- */
+:root {
+  --verde: #0b5a43;
+  --verde-oscuro: #0d4a37;
+  --verde-claro: #e6f2ec;
+  --verde-borde: #cfe3d8;
+  --amarillo: #f2c14e;
+  --texto: #1d2a25;
+  --gris: #5f6b66;
+  --borde: #dbe3df;
+  --borde-campo: #cfd8d4;
+  --fondo: #f4f6f5;
+  --pie: #18221f;
+  --error: #b3261e;
+  --error-fondo: #fdf1f0;
+  --blanco: #ffffff;
+  --sombra: 0 8px 28px rgba(16, 40, 32, 0.07);
+  --fuente: "Plus Jakarta Sans", system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* ---------- Selectores de TIPO ---------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fuente);
+  line-height: 1.55;
+  color: var(--texto);
+  background: var(--fondo);
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  color: var(--verde-oscuro);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: 2.6rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+p {
+  margin: 0 0 0.75rem;
+}
+
+a {
+  color: var(--verde);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+svg {
+  flex-shrink: 0;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+address {
+  font-style: normal;
+}
+
+/* El atributo hidden siempre gana, aunque la clase defina display */
+[hidden] {
+  display: none !important;
+}
+
+/* ---------- Contenedor ---------- */
+.contenedor {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+main.contenedor {
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+}
+
+.bajada {
+  max-width: 34rem;
+  margin: 0.5rem 0 0;
+  color: var(--gris);
+  font-size: 1.05rem;
+}
+
+/* ---------- Encabezado ---------- */
+.encabezado {
+  background: var(--verde);
+}
+
+.encabezado .contenedor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 64px;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--blanco);
+  font-size: 1.15rem;
+  font-weight: 800;
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+
+.menu {
+  display: flex;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu a {
+  display: block;
+  padding: 0.5rem 0.95rem;
+  border-radius: 10px;
+  color: var(--blanco);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.menu a:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Página actual: pastilla clara con línea amarilla abajo */
+.menu a.activo {
+  background: rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 -3px 0 var(--amarillo);
+  font-weight: 700;
+}
+
+/* ---------- Paneles (tarjetas blancas grandes) ---------- */
+.panel {
+  padding: 1.75rem 2rem;
+  border: 1px solid var(--borde);
+  border-radius: 20px;
+  background: var(--blanco);
+  box-shadow: var(--sombra);
+}
+
+.panel h2 + .nota {
+  margin-top: 0.2rem;
+}
+
+.nota {
+  color: var(--gris);
+  font-size: 0.82rem;
+}
+
+.dos-columnas {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 250px;
+  gap: 1.5rem;
+  align-items: start;
+  margin-top: 1.75rem;
+}
+
+/* ---------- Botones ---------- */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.8rem 1.35rem;
+  border: none;
+  border-radius: 12px;
+  background: var(--amarillo);
+  color: var(--verde-oscuro);
+  font: inherit;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(242, 193, 78, 0.45);
+  transition: filter 0.15s, transform 0.15s;
+}
+
+.boton:hover {
+  filter: brightness(0.96);
+  transform: translateY(-1px);
+}
+
+.boton--ancho {
+  width: 100%;
+  box-shadow: none;
+}
+
+.boton-volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 1rem;
+  border: 1.5px solid var(--verde);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--verde);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.boton-volver:hover {
+  background: var(--verde-claro);
+}
+
+/* ---------- Campos de formulario ---------- */
+input,
+select,
+textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--borde-campo);
+  border-radius: 10px;
+  background: var(--blanco);
+  color: var(--texto);
+  font: inherit;
+  font-size: 0.95rem;
+}
+
+textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+select {
+  appearance: none;
+  padding-right: 2.5rem;
+  background: var(--blanco) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%230b5a43' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 0.9rem center;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #8a9590;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--verde);
+  box-shadow: 0 0 0 3px rgba(242, 193, 78, 0.45);
+}
+
+/* Selector de ATRIBUTO: campos marcados como inválidos por preinscripcion.js */
+input[aria-invalid="true"],
+select[aria-invalid="true"] {
+  border-color: var(--error);
+  background-color: var(--error-fondo);
+}
+
+.obligatorio {
+  color: var(--error);
+}
+
+.mensaje-error {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.4rem;
+  color: var(--error);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.mensaje-error:empty {
+  display: none;
+}
+
+/* Ícono "!" antes del mensaje de error */
+.mensaje-error::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b3261e' stroke-width='2.5' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 7v6M12 17h.01'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+/* ---------- Formulario de preinscripción (selector de ID) ---------- */
+#form-preinscripcion {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1rem 1.1rem;
+  margin-top: 1.25rem;
+}
+
+.campo--ancho,
+.acciones {
+  grid-column: 1 / -1;
+}
+
+.acciones {
+  margin-top: 0.35rem;
+}
+
+.exito {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 0.85rem;
+  align-items: start;
+  margin-top: 1.25rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--verde-borde);
+  border-radius: 12px;
+  background: var(--verde-claro);
+}
+
+.exito__icono {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--verde-oscuro);
+  color: var(--blanco);
+}
+
+.exito strong {
+  display: block;
+  color: var(--verde-oscuro);
+  font-size: 1rem;
+}
+
+.exito p {
+  margin: 0.15rem 0 0;
+  font-size: 0.9rem;
+}
+
+/* ---------- Barra lateral (aside) ---------- */
+.lateral {
+  padding: 1.35rem 1.25rem;
+  border: 1px solid var(--verde-borde);
+  border-radius: 20px;
+  background: var(--verde-claro);
+  font-size: 0.88rem;
+}
+
+.lateral h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.icono-circulo {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--amarillo);
+  color: var(--verde-oscuro);
+}
+
+.checks {
+  margin: 0 0 1.1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.checks li {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 0.7rem;
+}
+
+.checks svg {
+  margin-top: 0.15rem;
+  color: var(--verde);
+}
+
+.descuentos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  margin: 0 0 1.1rem;
+}
+
+.descuento {
+  margin: 0;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--verde-borde);
+  border-radius: 12px;
+  background: var(--blanco);
+  color: var(--gris);
+  font-size: 0.75rem;
+  line-height: 1.3;
+}
+
+.descuento strong {
+  display: block;
+  color: var(--verde-oscuro);
+  font-size: 1.55rem;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.lateral dl {
+  margin: 0 0 1rem;
+}
+
+.lateral dt {
+  font-weight: 700;
+}
+
+.lateral dd {
+  margin: 0 0 0.6rem;
+}
+
+.lateral a {
+  font-weight: 700;
+  overflow-wrap: anywhere; /* el email largo corta en vez de salirse del recuadro */
+}
+
+/* ---------- Filtros del catálogo (selector de ID) ---------- */
+#filtros {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.25rem;
+  margin-top: 1.75rem;
+  padding: 1.1rem 1.25rem;
+}
+
+.pastillas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.pastilla {
+  padding: 0.42rem 0.85rem;
+  border: 1px solid var(--borde-campo);
+  border-radius: 999px;
+  background: var(--blanco);
+  color: var(--texto);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pastilla:hover {
+  border-color: var(--verde);
+}
+
+/* Selector de ATRIBUTO: la disciplina elegida (aria-pressed lo cambia actividades.js) */
+.pastilla[aria-pressed="true"] {
+  border-color: var(--verde);
+  background: var(--verde);
+  color: var(--blanco);
+}
+
+.filtro-edad {
+  flex-shrink: 0;
+  width: 6rem;
+}
+
+.filtro-edad input {
+  min-height: 40px;
+}
+
+/* ---------- Tarjetas de actividades ---------- */
+#lista-actividades {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.1rem;
+  margin-top: 1.5rem;
+}
+
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  padding: 1.15rem 1rem 1.1rem;
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+  background: var(--blanco);
+  box-shadow: var(--sombra);
+}
+
+.etiqueta {
+  align-self: flex-start;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: var(--verde-claro);
+  color: var(--verde-oscuro);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.tarjeta h3 {
+  margin: 0.65rem 0 0.75rem;
+  font-size: 1.12rem;
+}
+
+.tarjeta__datos {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--gris);
+  font-size: 0.85rem;
+}
+
+.tarjeta__datos li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.tarjeta__datos svg {
+  color: var(--verde);
+}
+
+.tarjeta__precio {
+  display: flex;
+  flex-wrap: wrap; /* si no entra en una línea, el cupo baja en vez de salirse de la tarjeta */
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0 0.25rem;
+  margin-top: auto;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--borde);
+}
+
+.precio {
+  margin: 0;
+  color: var(--verde-oscuro);
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.precio small,
+.lugares {
+  color: var(--gris);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.precio small {
+  margin-left: 0.15rem;
+}
+
+.tarjeta .boton {
+  margin-top: 0.9rem;
+  padding: 0.7rem 1rem;
+}
+
+/* El espacio arriba del precio queda fijo aunque los datos ocupen distinto alto */
+.tarjeta__datos {
+  margin-bottom: 1rem;
+}
+
+.aviso {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  border: 1px dashed var(--verde-borde);
+  border-radius: 16px;
+  background: var(--verde-claro);
+  text-align: center;
+}
+
+/* ---------- Inicio ---------- */
+.portada {
+  padding: 2.75rem 2.25rem;
+  border-radius: 24px;
+  background: linear-gradient(135deg, var(--verde) 0%, #17795a 100%);
+  color: var(--blanco);
+}
+
+.portada h1 {
+  max-width: 30rem;
+  color: var(--blanco);
+}
+
+.portada .bajada {
+  margin-bottom: 1.5rem;
+  color: #d8ece2;
+}
+
+.contenido-inicio {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.panel h2 {
+  margin-bottom: 0.85rem;
+}
+
+.imagen-ancha {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  margin-bottom: 1rem;
+  border-radius: 14px;
+}
+
+.lista-ofrece {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lista-ofrece li {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.lista-ofrece svg {
+  margin-top: 0.2rem;
+  color: var(--verde);
+}
+
+/* Selector de ATRIBUTO: los enlaces que abren otra pestaña llevan una flecha */
+a[target="_blank"]::after {
+  content: " \2197";
+}
+
+/* Texto oculto a la vista pero disponible para lectores de pantalla */
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Pie ---------- */
+.pie {
+  padding: 2.25rem 1.25rem;
+  background: var(--pie);
+  color: #c4cfca;
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.pie p {
+  margin: 0 0 0.6rem;
+}
+
+.pie nav {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.pie a {
+  color: var(--amarillo);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Responsivo
+   ========================================================================== */
+
+/* Tablet: 2 columnas de tarjetas; el aside pasa arriba del contenido */
+@media (max-width: 1024px) {
+  #lista-actividades {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 820px) {
+  .dos-columnas {
+    grid-template-columns: 1fr;
+  }
+
+  .lateral {
+    order: -1;
+  }
+
+  #filtros {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filtro-edad {
+    width: 100%;
+  }
+}
+
+/* Celular: una columna, menú debajo del logo, botones a todo el ancho */
+@media (max-width: 600px) {
+  .encabezado .contenedor {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    padding-top: 0.85rem;
+    padding-bottom: 0.6rem;
+  }
+
+  .menu {
+    justify-content: space-between;
+  }
+
+  .menu a {
+    padding: 0.5rem 0.8rem;
+  }
+
+  h1 {
+    font-size: 2.1rem;
+  }
+
+  .panel {
+    padding: 1.4rem 1.25rem;
+  }
+
+  #lista-actividades,
+  #form-preinscripcion {
+    grid-template-columns: 1fr;
+  }
+
+  #form-preinscripcion .boton {
+    width: 100%;
+  }
+
+  .portada {
+    padding: 2rem 1.4rem;
+  }
+}

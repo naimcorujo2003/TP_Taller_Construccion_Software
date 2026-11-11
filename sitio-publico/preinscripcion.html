@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Formulario de preinscripción a las actividades del Club Los Algarrobos.">
+  <title>Club Los Algarrobos | Preinscripción</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="contenedor">
+      <a class="marca" href="index.html">
+        <img src="img/logo.svg" alt="Escudo del Club Los Algarrobos: un algarrobo dentro de un círculo verde" width="40" height="40">
+        <span>Club Los Algarrobos</span>
+      </a>
+      <nav aria-label="Navegación principal">
+        <ul class="menu">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="actividades.html">Actividades</a></li>
+          <li><a href="preinscripcion.html" class="activo" aria-current="page">Preinscripción</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <button type="button" class="boton-volver" data-accion="volver">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Volver
+    </button>
+
+    <h1>Preinscripción</h1>
+    <p class="bajada">Completá el formulario y la secretaría se comunica con vos para confirmar la inscripción.</p>
+
+    <div class="dos-columnas">
+      <section class="panel" aria-labelledby="titulo-form">
+        <h2 id="titulo-form">Tus datos</h2>
+        <p class="nota">Los campos con <span class="obligatorio">*</span> son obligatorios.</p>
+
+        <form id="form-preinscripcion" novalidate>
+          <div class="campo">
+            <label for="nombre">Nombre <span class="obligatorio">*</span></label>
+            <input type="text" id="nombre" aria-describedby="error-nombre" name="nombre" autocomplete="given-name">
+            <span class="mensaje-error" id="error-nombre"></span>
+          </div>
+          <div class="campo">
+            <label for="apellido">Apellido <span class="obligatorio">*</span></label>
+            <input type="text" id="apellido" aria-describedby="error-apellido" name="apellido" autocomplete="family-name">
+            <span class="mensaje-error" id="error-apellido"></span>
+          </div>
+          <div class="campo">
+            <label for="dni">DNI <span class="obligatorio">*</span></label>
+            <input type="text" id="dni" aria-describedby="error-dni" name="dni" inputmode="numeric" placeholder="Sin puntos, ej: 40111001">
+            <span class="mensaje-error" id="error-dni"></span>
+          </div>
+          <div class="campo">
+            <label for="fechaNacimiento">Fecha de nacimiento <span class="obligatorio">*</span></label>
+            <input type="date" id="fechaNacimiento" aria-describedby="error-fechaNacimiento" name="fechaNacimiento">
+            <span class="mensaje-error" id="error-fechaNacimiento"></span>
+          </div>
+          <div class="campo">
+            <label for="email">Email <span class="obligatorio">*</span></label>
+            <input type="email" id="email" aria-describedby="error-email" name="email" autocomplete="email" placeholder="nombre@mail.com">
+            <span class="mensaje-error" id="error-email"></span>
+          </div>
+          <div class="campo">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" aria-describedby="error-telefono" name="telefono" autocomplete="tel" placeholder="351 555-1234">
+            <span class="mensaje-error" id="error-telefono"></span>
+          </div>
+          <div class="campo campo--ancho">
+            <label for="actividad">Actividad <span class="obligatorio">*</span></label>
+            <select id="actividad" aria-describedby="error-actividad" name="actividad">
+              <option value="">Elegí una actividad</option>
+              <option value="Fútbol infantil" data-edad-min="6" data-edad-max="12">Fútbol infantil (6 a 12 años)</option>
+              <option value="Vóley mixto" data-edad-min="13" data-edad-max="60">Vóley mixto (13 a 60 años)</option>
+              <option value="Básquet juvenil" data-edad-min="12" data-edad-max="17">Básquet juvenil (12 a 17 años)</option>
+              <option value="Natación" data-edad-min="5" data-edad-max="70">Natación (5 a 70 años)</option>
+              <option value="Patín artístico" data-edad-min="5" data-edad-max="15">Patín artístico (5 a 15 años)</option>
+              <option value="Ajedrez" data-edad-min="8" data-edad-max="99">Ajedrez (8 a 99 años)</option>
+              <option value="Funcional adultos" data-edad-min="18" data-edad-max="65">Funcional adultos (18 a 65 años)</option>
+              <option value="Yoga" data-edad-min="16" data-edad-max="99">Yoga (16 a 99 años)</option>
+            </select>
+            <span class="mensaje-error" id="error-actividad"></span>
+          </div>
+          <div class="campo campo--ancho">
+            <label for="comentarios">Comentarios</label>
+            <textarea id="comentarios" name="comentarios" rows="4" placeholder="Horario en que preferís que te llamemos, consultas…"></textarea>
+          </div>
+          <div class="acciones">
+            <button type="submit" class="boton">
+              Enviar preinscripción
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </form>
+
+        <div id="mensaje-exito" class="exito" role="status" hidden>
+          <span class="exito__icono">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <div>
+            <strong id="exito-titulo"></strong>
+            <p id="exito-texto"></p>
+          </div>
+        </div>
+      </section>
+
+      <aside class="lateral" aria-labelledby="titulo-info">
+        <h2 id="titulo-info">
+          <span class="icono-circulo">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          </span>
+          Antes de anotarte
+        </h2>
+        <ul class="checks">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>
+            El DNI va sin puntos: 7 u 8 números.
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>
+            Cada socio puede anotarse en hasta 3 actividades.
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>
+            Para inscribirte, la cuota social tiene que estar al día.
+          </li>
+        </ul>
+        <div class="descuentos">
+          <p class="descuento">2 actividades <strong>10 %</strong> de descuento</p>
+          <p class="descuento">3 actividades <strong>15 %</strong> de descuento</p>
+        </div>
+        <p>¿Dudas? Escribinos a <a href="mailto:secretaria@losalgarrobos.org.ar">secretaria@losalgarrobos.org.ar</a>.</p>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="pie">
+    <p>&copy; 2026 Club Social y Deportivo Los Algarrobos · Córdoba, Argentina</p>
+    <nav aria-label="Enlaces del pie">
+      <a href="index.html">Inicio</a>
+      <a href="actividades.html">Actividades</a>
+      <a href="preinscripcion.html">Preinscripción</a>
+    </nav>
+  </footer>
+
+  <script src="js/comun.js"></script>
+  <script src="js/preinscripcion.js"></script>
+</body>
+</html>

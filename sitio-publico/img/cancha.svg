@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 220" width="400" height="220">
+  <rect width="400" height="220" fill="#cfe8d6"/>
+  <!-- Cancha de fútbol vista desde arriba -->
+  <rect x="30" y="30" width="340" height="160" fill="#3f9b5c" stroke="#ffffff" stroke-width="3"/>
+  <line x1="200" y1="30" x2="200" y2="190" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="200" cy="110" r="28" fill="none" stroke="#ffffff" stroke-width="3"/>
+  <rect x="30" y="75" width="40" height="70" fill="none" stroke="#ffffff" stroke-width="3"/>
+  <rect x="330" y="75" width="40" height="70" fill="none" stroke="#ffffff" stroke-width="3"/>
+  <circle cx="200" cy="110" r="4" fill="#ffffff"/>
+</svg>

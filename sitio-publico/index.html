@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Club Social y Deportivo Los Algarrobos, club de barrio de la zona norte de Córdoba.">
+  <title>Club Los Algarrobos | Inicio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="contenedor">
+      <a class="marca" href="index.html">
+        <img src="img/logo.svg" alt="Escudo del Club Los Algarrobos: un algarrobo dentro de un círculo verde" width="40" height="40">
+        <span>Club Los Algarrobos</span>
+      </a>
+      <nav aria-label="Navegación principal">
+        <ul class="menu">
+          <li><a href="index.html" class="activo" aria-current="page">Inicio</a></li>
+          <li><a href="actividades.html">Actividades</a></li>
+          <li><a href="preinscripcion.html">Preinscripción</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <section id="portada" class="portada">
+      <h1>Club Social y Deportivo Los Algarrobos</h1>
+      <p class="bajada">Deporte, amistad y comunidad en la zona norte de Córdoba. Más de 650 socios y 8 actividades para chicos y adultos.</p>
+      <a class="boton" href="actividades.html">
+        Ver actividades
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </section>
+
+    <div class="dos-columnas">
+      <div class="contenido-inicio">
+        <section id="historia" class="panel">
+          <h2>Nuestra historia</h2>
+          <img class="imagen-ancha" src="img/cancha.svg" alt="Dibujo de la cancha de fútbol del club vista desde arriba" width="400" height="220">
+          <p>
+            El club nació en 1962, cuando un grupo de vecinos del barrio se juntaba a jugar a la pelota bajo los
+            algarrobos de un terreno baldío. Con rifas, peñas y mucho trabajo voluntario se levantó la primera cancha
+            y, años después, el salón y la pileta.
+          </p>
+          <p>
+            Hoy seguimos siendo un club de barrio: las cuotas son accesibles, los profes son del barrio y las familias
+            participan de la vida del club.
+          </p>
+        </section>
+
+        <section id="que-ofrecemos" class="panel">
+          <h2>Qué ofrecemos</h2>
+          <ul class="lista-ofrece">
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>
+              <span><strong>Para chicos:</strong> fútbol infantil, básquet juvenil, patín artístico y natación.</span>
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>
+              <span><strong>Para adultos:</strong> vóley mixto, funcional, yoga y ajedrez.</span>
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>
+              <span><strong>Bonificación:</strong> 10 % de descuento con 2 actividades y 15 % con 3.</span>
+            </li>
+          </ul>
+        </section>
+
+        <section id="ubicacion" class="panel">
+          <h2>Dónde estamos</h2>
+          <address>
+            Av. de los Algarrobos 1450, barrio Los Algarrobos<br>
+            Zona norte, ciudad de Córdoba
+          </address>
+          <p>Llegan las líneas de colectivo 20, 21 y 70. Hay bicicletero en la entrada.</p>
+          <p><a href="https://www.openstreetmap.org/search?query=C%C3%B3rdoba%2C%20Argentina" target="_blank" rel="noopener">Ver Córdoba en el mapa</a></p>
+        </section>
+      </div>
+
+      <aside class="lateral" aria-labelledby="titulo-secretaria">
+        <h2 id="titulo-secretaria">
+          <span class="icono-circulo">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          </span>
+          Secretaría
+        </h2>
+        <dl>
+          <dt>Horario</dt>
+          <dd>Lunes a viernes de 9 a 13 y de 16 a 20 h</dd>
+          <dt>Teléfono</dt>
+          <dd><a href="tel:+543515550000">351 555-0000</a></dd>
+          <dt>Email</dt>
+          <dd><a href="mailto:secretaria@losalgarrobos.org.ar">secretaria@losalgarrobos.org.ar</a></dd>
+        </dl>
+        <p>¿Querés sumarte? Dejá tu <a href="preinscripcion.html">preinscripción online</a> y te llamamos.</p>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="pie">
+    <p>&copy; 2026 Club Social y Deportivo Los Algarrobos · Córdoba, Argentina</p>
+    <nav aria-label="Enlaces del pie">
+      <a href="index.html">Inicio</a>
+      <a href="actividades.html">Actividades</a>
+      <a href="preinscripcion.html">Preinscripción</a>
+    </nav>
+  </footer>
+
+  <script src="js/comun.js"></script>
+</body>
+</html>
