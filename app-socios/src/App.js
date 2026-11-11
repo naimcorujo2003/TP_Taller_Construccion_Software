@@ -3,6 +3,8 @@ import { ProveedorSocio } from './contexto/ContextoSocio';
 import Encabezado from './componentes/Encabezado';
 import Pie from './componentes/Pie';
 import Ingreso from './componentes/Ingreso';
+import ListaActividades from './componentes/ListaActividades';
+import RutaProtegida from './componentes/RutaProtegida';
 import './estilos/App.css';
 
 function App() {
@@ -14,6 +16,14 @@ function App() {
           <main className="aplicacion__contenido">
             <Routes>
               <Route path="/" element={<Ingreso />} />
+              <Route
+                path="/actividades"
+                element={
+                  <RutaProtegida>
+                    <ListaActividades />
+                  </RutaProtegida>
+                }
+              />
             </Routes>
           </main>
           <Pie />
