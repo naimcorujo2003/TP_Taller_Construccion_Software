@@ -1,0 +1,23 @@
+.detalle {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.detalle--sin-cupo {
+  background: #e0e0e0;
+  color: #757575;
+}
+
+.detalle__datos {
+  padding-left: 1.25rem;
+  line-height: 1.6;
+}
+
+.detalle__acciones {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}

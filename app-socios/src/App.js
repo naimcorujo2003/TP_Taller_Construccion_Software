@@ -4,6 +4,7 @@ import Encabezado from './componentes/Encabezado';
 import Pie from './componentes/Pie';
 import Ingreso from './componentes/Ingreso';
 import ListaActividades from './componentes/ListaActividades';
+import DetalleActividad from './componentes/DetalleActividad';
 import RutaProtegida from './componentes/RutaProtegida';
 import './estilos/App.css';
 
@@ -21,6 +22,14 @@ function App() {
                 element={
                   <RutaProtegida>
                     <ListaActividades />
+                  </RutaProtegida>
+                }
+              />
+              <Route
+                path="/actividades/:id"
+                element={
+                  <RutaProtegida>
+                    <DetalleActividad />
                   </RutaProtegida>
                 }
               />
