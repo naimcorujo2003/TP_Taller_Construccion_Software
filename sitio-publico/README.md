@@ -36,19 +36,26 @@ Para que Jest pueda usar las funciones, al final de `actividades.js` y `preinscr
 ## Requisitos de la materia y dónde están
 
 - **HTML semántico**: `header`, `nav`, `main`, `section`, `article` (cada tarjeta, creada por JS), `aside` y `footer`.
-- **Selectores CSS**: tipo (`body`, `h1`, `label`), clase (`.tarjeta`, `.boton`), ID (`#portada`, `#filtros`) y
-  atributo (`.tarjeta[data-publico="infantil"]`, `input[type="email"]`, `a[target="_blank"]`).
-- **Media queries**: `max-width: 900px` (2 columnas, aside abajo) y `max-width: 600px` (1 columna, menú debajo del logo).
+- **Selectores CSS**: tipo (`body`, `h1`, `label`), clase (`.tarjeta`, `.boton`, `.panel`), ID (`#filtros`,
+  `#form-preinscripcion`, `#lista-actividades`) y atributo (`.pastilla[aria-pressed="true"]` para la disciplina elegida,
+  `input[aria-invalid="true"]` para los campos con error, `a[target="_blank"]`).
+- **Media queries**: `max-width: 1024px` (2 columnas de tarjetas), `max-width: 820px` (el `aside` pasa arriba del
+  contenido) y `max-width: 600px` (1 columna, menú debajo del logo, botones a todo el ancho).
 - **Clase `Actividad`** con los métodos `esAptaParaEdad(edad)`, `esInfantil()`, `cuotaFormateada()` y `crearTarjeta()`.
-- **Eventos con `addEventListener`**: `change` del select, `input` del campo edad, `click` de "Limpiar filtros",
-  `submit` y `focusout` del formulario.
+  Los íconos de la tarjeta se crean con `document.createElementNS` (los SVG necesitan su propio namespace).
+- **Eventos con `addEventListener`**: `click` en el contenedor de pastillas (delegación de eventos: un solo listener
+  atiende todos los botones), `input` del campo edad, `submit` y `focusout` del formulario.
 - **Objetos del navegador**: `history` (botón Volver) y `location` (el botón "Preinscribirme" de cada tarjeta abre
   `preinscripcion.html?actividad=Yoga` y el formulario lee `location.search` para preseleccionar la actividad).
+- **Tipografía**: Plus Jakarta Sans desde Google Fonts; si no hay internet se usa la fuente del sistema.
 
 ## Flujo del filtro (para explicar en la defensa)
 
-1. El usuario cambia el select o escribe una edad → se dispara el evento `change` / `input`.
-2. El listener llama a `filtrar()`, que lee `selectDisciplina.value` e `inputEdad.value`.
-3. `actividades.filter(...)` se queda con las que coinciden; la edad se chequea con `actividad.esAptaParaEdad(edad)`.
+1. El usuario toca una pastilla de disciplina o escribe una edad → se dispara `click` (en el contenedor `#filtro-disciplina`)
+   o `input` (en `#filtro-edad`).
+2. En el `click`, `evento.target.closest('.pastilla')` encuentra el botón tocado; se guarda su `data-disciplina` en
+   `disciplinaElegida` y se marca con `aria-pressed="true"` (el CSS lo pinta de verde por ese atributo).
+3. `filtrar()` lee `disciplinaElegida` e `inputEdad.value`; `actividades.filter(...)` se queda con las que coinciden y la
+   edad se chequea con `actividad.esAptaParaEdad(edad)`.
 4. `mostrarActividades(lista)` vacía `#lista-actividades` y agrega un `article` por actividad con `crearTarjeta()`
    (`document.createElement` + `append`). Si la lista queda vacía se muestra el aviso "No hay actividades...".

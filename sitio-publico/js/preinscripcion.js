@@ -95,7 +95,8 @@ formulario.addEventListener('submit', function (evento) {
 
   const nombre = formulario.elements.nombre.value.trim();
   const actividad = formulario.elements.actividad.value;
-  mensajeExito.textContent = '¡Gracias, ' + nombre + '! Recibimos tu preinscripción a ' + actividad +
+  document.getElementById('exito-titulo').textContent = '¡Gracias, ' + nombre + '!';
+  document.getElementById('exito-texto').textContent = 'Recibimos tu preinscripción a ' + actividad +
     '. La secretaría se va a comunicar con vos para confirmarla.';
   mensajeExito.hidden = false;
   formulario.reset();

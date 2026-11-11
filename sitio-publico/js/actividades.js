@@ -1,6 +1,44 @@
 // Catálogo de actividades: se genera con JavaScript a partir de un arreglo de objetos.
 
 // ---------------------------------------------------------------------------
+// Íconos SVG (líneas simples). Cada ícono es una lista de [etiqueta, atributos].
+// ---------------------------------------------------------------------------
+const ICONOS = {
+  reloj: [['circle', { cx: 12, cy: 12, r: 10 }], ['path', { d: 'M12 6v6l4 2' }]],
+  personas: [
+    ['path', { d: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2' }],
+    ['circle', { cx: 9, cy: 7, r: 4 }],
+    ['path', { d: 'M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75' }],
+  ],
+  persona: [['path', { d: 'M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2' }], ['circle', { cx: 12, cy: 7, r: 4 }]],
+  flecha: [['path', { d: 'M5 12h14M12 5l7 7-7 7' }]],
+};
+
+// Crea un <svg> con document.createElementNS (los SVG necesitan su propio "namespace")
+function crearIcono(nombre, tamanio) {
+  const ns = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('width', tamanio);
+  svg.setAttribute('height', tamanio);
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('fill', 'none');
+  svg.setAttribute('stroke', 'currentColor');
+  svg.setAttribute('stroke-width', '2.2');
+  svg.setAttribute('stroke-linecap', 'round');
+  svg.setAttribute('stroke-linejoin', 'round');
+  svg.setAttribute('aria-hidden', 'true');
+
+  ICONOS[nombre].forEach(function (forma) {
+    const elemento = document.createElementNS(ns, forma[0]);
+    Object.keys(forma[1]).forEach(function (atributo) {
+      elemento.setAttribute(atributo, forma[1][atributo]);
+    });
+    svg.appendChild(elemento);
+  });
+  return svg;
+}
+
+// ---------------------------------------------------------------------------
 // Clase Actividad
 // ---------------------------------------------------------------------------
 class Actividad {
@@ -37,40 +75,47 @@ class Actividad {
     tarjeta.className = 'tarjeta';
     tarjeta.dataset.publico = this.esInfantil() ? 'infantil' : 'general';
 
+    const etiqueta = document.createElement('span');
+    etiqueta.className = 'etiqueta';
+    etiqueta.textContent = this.disciplina;
+
     const titulo = document.createElement('h3');
     titulo.textContent = this.nombre;
 
-    const disciplina = document.createElement('span');
-    disciplina.className = 'disciplina';
-    disciplina.textContent = this.disciplina;
-
     const datos = document.createElement('ul');
-    agregarItem(datos, 'Días y horario: ', this.dias + ' ' + this.horario + ' h');
-    agregarItem(datos, 'Edades: ', this.edadMinima + ' a ' + this.edadMaxima + ' años');
-    agregarItem(datos, 'Profesor/a: ', this.profesor);
-    agregarItem(datos, 'Cupo: ', this.cupoMaximo + ' lugares');
+    datos.className = 'tarjeta__datos';
+    agregarDato(datos, 'reloj', this.dias + ' · ' + this.horario);
+    agregarDato(datos, 'personas', this.edadMinima + ' a ' + this.edadMaxima + ' años');
+    agregarDato(datos, 'persona', 'Prof. ' + this.profesor);
 
+    // Precio grande + "/mes" a la izquierda y el cupo a la derecha
+    const filaPrecio = document.createElement('div');
+    filaPrecio.className = 'tarjeta__precio';
     const precio = document.createElement('p');
     precio.className = 'precio';
-    precio.textContent = this.cuotaFormateada() + ' / mes';
+    const porMes = document.createElement('small');
+    porMes.textContent = '/mes';
+    precio.append(this.cuotaFormateada(), porMes);
+    const lugares = document.createElement('span');
+    lugares.className = 'lugares';
+    lugares.textContent = this.cupoMaximo + ' lugares';
+    filaPrecio.append(precio, lugares);
 
     const enlace = document.createElement('a');
-    enlace.className = 'boton';
+    enlace.className = 'boton boton--ancho';
     // Se pasa la actividad por la URL; preinscripcion.js la lee con location.search
     enlace.href = 'preinscripcion.html?actividad=' + encodeURIComponent(this.nombre);
-    enlace.textContent = 'Preinscribirme';
+    enlace.append('Preinscribirme', crearIcono('flecha', 16));
 
-    tarjeta.append(titulo, disciplina, datos, precio, enlace);
+    tarjeta.append(etiqueta, titulo, datos, filaPrecio, enlace);
     return tarjeta;
   }
 }
 
-// Agrega un <li> con una etiqueta en negrita y un valor
-function agregarItem(lista, etiqueta, valor) {
+// Agrega un <li> con un ícono y un texto
+function agregarDato(lista, icono, texto) {
   const item = document.createElement('li');
-  const negrita = document.createElement('strong');
-  negrita.textContent = etiqueta;
-  item.append(negrita, valor);
+  item.append(crearIcono(icono, 15), texto);
   lista.appendChild(item);
 }
 
@@ -89,16 +134,16 @@ const actividades = [
 ];
 
 // ---------------------------------------------------------------------------
-// Referencias a elementos del DOM
+// Referencias a elementos del DOM y estado del filtro
 // ---------------------------------------------------------------------------
 const contenedor = document.getElementById('lista-actividades');
-const selectDisciplina = document.getElementById('filtro-disciplina');
+const pastillas = document.getElementById('filtro-disciplina');
 const inputEdad = document.getElementById('filtro-edad');
-const botonLimpiar = document.getElementById('boton-limpiar');
 const sinResultados = document.getElementById('sin-resultados');
-const contador = document.getElementById('contador');
 
-// Llena el <select> con las disciplinas, sin repetir
+let disciplinaElegida = ''; // '' significa "Todas"
+
+// Crea una pastilla (botón) por disciplina, sin repetir y en el orden del arreglo
 function cargarDisciplinas() {
   const disciplinas = [];
   actividades.forEach(function (actividad) {
@@ -107,12 +152,14 @@ function cargarDisciplinas() {
     }
   });
 
-  // localeCompare ordena bien las palabras con tilde (Básquet antes que Bienestar)
-  disciplinas.sort(function (a, b) { return a.localeCompare(b, 'es'); }).forEach(function (disciplina) {
-    const opcion = document.createElement('option');
-    opcion.value = disciplina;
-    opcion.textContent = disciplina;
-    selectDisciplina.appendChild(opcion);
+  disciplinas.forEach(function (disciplina) {
+    const boton = document.createElement('button');
+    boton.type = 'button';
+    boton.className = 'pastilla';
+    boton.dataset.disciplina = disciplina;
+    boton.setAttribute('aria-pressed', 'false');
+    boton.textContent = disciplina;
+    pastillas.appendChild(boton);
   });
 }
 
@@ -125,16 +172,14 @@ function mostrarActividades(lista) {
   });
 
   sinResultados.hidden = lista.length > 0;
-  contador.textContent = '(' + lista.length + ' de ' + actividades.length + ')';
 }
 
 // Lee los filtros, arma la lista filtrada y redibuja
 function filtrar() {
-  const disciplina = selectDisciplina.value;
   const edad = parseInt(inputEdad.value, 10); // NaN si el campo está vacío
 
   const filtradas = actividades.filter(function (actividad) {
-    const coincideDisciplina = disciplina === '' || actividad.disciplina === disciplina;
+    const coincideDisciplina = disciplinaElegida === '' || actividad.disciplina === disciplinaElegida;
     const coincideEdad = isNaN(edad) || actividad.esAptaParaEdad(edad);
     return coincideDisciplina && coincideEdad;
   });
@@ -145,13 +190,22 @@ function filtrar() {
 // ---------------------------------------------------------------------------
 // Eventos
 // ---------------------------------------------------------------------------
-selectDisciplina.addEventListener('change', filtrar);
-inputEdad.addEventListener('input', filtrar);
-botonLimpiar.addEventListener('click', function () {
-  selectDisciplina.value = '';
-  inputEdad.value = '';
+
+// Un solo listener en el contenedor atiende el clic de cualquier pastilla (delegación de eventos)
+pastillas.addEventListener('click', function (evento) {
+  const pastilla = evento.target.closest('.pastilla');
+  if (!pastilla) {
+    return;
+  }
+
+  disciplinaElegida = pastilla.dataset.disciplina;
+  pastillas.querySelectorAll('.pastilla').forEach(function (boton) {
+    boton.setAttribute('aria-pressed', boton === pastilla ? 'true' : 'false');
+  });
   filtrar();
 });
+
+inputEdad.addEventListener('input', filtrar);
 
 // Primera carga
 cargarDisciplinas();
