@@ -1,0 +1,35 @@
+.encabezado {
+  background: var(--color-primario);
+  color: #fff;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.encabezado__titulo {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.encabezado__nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.encabezado__nav a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.encabezado__nav a.active {
+  text-decoration: underline;
+}
+
+.encabezado__socio {
+  font-weight: bold;
+}

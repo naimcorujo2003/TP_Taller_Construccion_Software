@@ -1,0 +1,23 @@
+.lista-actividades select {
+  margin: 0 0 1rem 0.5rem;
+  padding: 0.4rem;
+}
+
+/* One column on phones, more columns as the screen grows */
+.lista-actividades__grilla {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .lista-actividades__grilla {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .lista-actividades__grilla {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

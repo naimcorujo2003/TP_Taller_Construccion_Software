@@ -23,7 +23,7 @@ Grupo N.º: _completar_
 |---|---|---|---|
 | [`/sitio-publico`](sitio-publico) | HTML5, CSS3 y JavaScript: sitio público del club | A | Listo |
 | [`/backend`](backend) | Spring Boot + Thymeleaf + JPA + API REST | B y C | Listo |
-| [`/app-socios`](app-socios) | App React "Mi Club" para socios | D y E | Pendiente |
+| [`/app-socios`](app-socios) | App React "Mi Club" para socios | D y E | Listo |
 | [`/database`](database) | `socioclub.sql`: creación de tablas y datos iniciales | — | Listo |
 
 ## Arquitectura
@@ -51,7 +51,7 @@ Los controladores MVC y los REST usan **la misma capa de servicio**: una inscrip
 - Java 17
 - Maven (o el `./mvnw` incluido en `backend/`)
 - Docker (solo para levantar MySQL)
-- Node.js y npm (para la app React, cuando esté disponible)
+- Node.js y npm (para el sitio público y la app React)
 
 ## Cómo levantar el proyecto
 
@@ -88,7 +88,7 @@ npm install
 npm start
 ```
 
-_Pendiente: la Parte D todavía no está subida._ El backend ya permite CORS para `http://localhost:3000`.
+Por defecto la app llama a `http://localhost:8080/api`. Si el backend corre en otro puerto (por ejemplo `SERVER_PORT=8081`), arrancarla con `REACT_APP_API_URL=http://localhost:8081/api npm start`. El backend permite CORS para `http://localhost:3000`. Más detalles en [`app-socios/README.md`](app-socios/README.md).
 
 ## Usuarios (DNI) de prueba
 
@@ -111,9 +111,11 @@ Yoga está llena (15/15) para probar la regla de cupo (RN1). La lista completa d
 | Backend (JUnit + Mockito + MockMvc, sin MySQL) | `cd backend && mvn test` |
 | API (Postman) | Importar `backend/postman/SocioClub.postman_collection.json` |
 | Sitio público (Jest + jsdom) | `cd sitio-publico && npm install && npm test` |
-| Jest + React Testing Library | `cd app-socios && npm test` _(pendiente)_ |
+| Jest + React Testing Library | `cd app-socios && npm test` |
+| Pruebas de sistema (6 casos, RN1 a RN5) | Ver [`docs/pruebas-de-sistema.md`](docs/pruebas-de-sistema.md) |
 
 ## Documentación
 
 - [`backend/README.md`](backend/README.md): endpoints (Anexo A), datos de prueba, estructura de paquetes y puntos clave para la defensa.
+- [`docs/informe-tecnico.md`](docs/informe-tecnico.md) y [`docs/bitacora-ia.md`](docs/bitacora-ia.md): borradores del informe y de la bitácora de IA (se completan y se entregan en PDF).
 - Informe técnico en PDF y bitácora de uso de IA: se entregan por el aula virtual como `TPI_SocioClub_GrupoN.pdf`.

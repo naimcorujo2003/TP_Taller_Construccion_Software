@@ -1,0 +1,67 @@
+:root {
+  --color-primario: #00664f;
+  --color-fondo: #f4f7f6;
+  --color-error: #b3261e;
+  --color-gris: #9e9e9e;
+}
+
+body {
+  background: var(--color-fondo);
+  color: #222;
+}
+
+.aplicacion {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.aplicacion__contenido {
+  flex: 1;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+  box-sizing: border-box;
+}
+
+.boton {
+  background: var(--color-primario);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.boton:disabled {
+  background: var(--color-gris);
+  cursor: not-allowed;
+}
+
+.boton--secundario {
+  background: transparent;
+  border: 1px solid #fff;
+}
+
+.mensaje {
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+}
+
+.mensaje--error {
+  background: #fdecea;
+  color: var(--color-error);
+}
+
+.mensaje--exito {
+  background: #e6f4ea;
+  color: #1e6b35;
+}
+
+.mensaje--vacio {
+  background: #fff;
+  border: 1px dashed var(--color-gris);
+  text-align: center;
+}

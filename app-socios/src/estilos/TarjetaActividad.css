@@ -1,0 +1,38 @@
+.tarjeta {
+  background: #fff;
+  border: 1px solid #cfd8dc;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.tarjeta__nombre {
+  margin: 0 0 0.5rem;
+  color: var(--color-primario);
+}
+
+.tarjeta__dato {
+  margin: 0;
+}
+
+.tarjeta--sin-cupo {
+  background: #e0e0e0;
+  color: #757575;
+}
+
+.tarjeta--sin-cupo .tarjeta__nombre {
+  color: #757575;
+}
+
+.tarjeta__etiqueta {
+  margin: 0;
+  font-weight: bold;
+  color: var(--color-error);
+}
+
+.tarjeta .boton {
+  margin-top: 0.5rem;
+  align-self: flex-start;
+}
