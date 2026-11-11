@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Formulario de preinscripción a las actividades del Club Los Algarrobos.">
+  <title>Club Los Algarrobos | Preinscripción</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header class="encabezado">
+    <a class="marca" href="index.html">
+      <img src="img/logo.svg" alt="Escudo del Club Los Algarrobos: un algarrobo dentro de un círculo verde" width="56" height="56">
+      <span>Club Los Algarrobos</span>
+    </a>
+    <nav aria-label="Navegación principal">
+      <ul class="menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="actividades.html">Actividades</a></li>
+        <li><a href="preinscripcion.html" class="activo" aria-current="page">Preinscripción</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <button type="button" class="boton boton--secundario boton-volver" data-accion="volver">&larr; Volver</button>
+    <h1>Preinscripción</h1>
+
+    <div class="contenido-con-lateral">
+      <section aria-labelledby="titulo-form">
+        <h2 id="titulo-form">Tus datos</h2>
+        <p>Completá el formulario y la secretaría se comunica con vos para confirmar la inscripción. Los campos con <span class="obligatorio">*</span> son obligatorios.</p>
+
+        <form id="form-preinscripcion" novalidate>
+          <div class="campo">
+            <label for="nombre">Nombre <span class="obligatorio">*</span></label>
+            <input type="text" id="nombre" name="nombre" autocomplete="given-name">
+            <span class="mensaje-error" id="error-nombre"></span>
+          </div>
+          <div class="campo">
+            <label for="apellido">Apellido <span class="obligatorio">*</span></label>
+            <input type="text" id="apellido" name="apellido" autocomplete="family-name">
+            <span class="mensaje-error" id="error-apellido"></span>
+          </div>
+          <div class="campo">
+            <label for="dni">DNI <span class="obligatorio">*</span></label>
+            <input type="text" id="dni" name="dni" inputmode="numeric" placeholder="Sin puntos, ej: 40111001">
+            <span class="mensaje-error" id="error-dni"></span>
+          </div>
+          <div class="campo">
+            <label for="fechaNacimiento">Fecha de nacimiento <span class="obligatorio">*</span></label>
+            <input type="date" id="fechaNacimiento" name="fechaNacimiento">
+            <span class="mensaje-error" id="error-fechaNacimiento"></span>
+          </div>
+          <div class="campo">
+            <label for="email">Email <span class="obligatorio">*</span></label>
+            <input type="email" id="email" name="email" autocomplete="email" placeholder="nombre@mail.com">
+            <span class="mensaje-error" id="error-email"></span>
+          </div>
+          <div class="campo">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" autocomplete="tel" placeholder="351 555-1234">
+            <span class="mensaje-error" id="error-telefono"></span>
+          </div>
+          <div class="campo">
+            <label for="actividad">Actividad <span class="obligatorio">*</span></label>
+            <select id="actividad" name="actividad">
+              <option value="">Elegí una actividad</option>
+              <option value="Fútbol infantil">Fútbol infantil (6 a 12 años)</option>
+              <option value="Vóley mixto">Vóley mixto (13 a 60 años)</option>
+              <option value="Básquet juvenil">Básquet juvenil (12 a 17 años)</option>
+              <option value="Natación">Natación (5 a 70 años)</option>
+              <option value="Patín artístico">Patín artístico (5 a 15 años)</option>
+              <option value="Ajedrez">Ajedrez (8 a 99 años)</option>
+              <option value="Funcional adultos">Funcional adultos (18 a 65 años)</option>
+              <option value="Yoga">Yoga (16 a 99 años)</option>
+            </select>
+            <span class="mensaje-error" id="error-actividad"></span>
+          </div>
+          <div class="campo">
+            <label for="comentarios">Comentarios</label>
+            <textarea id="comentarios" name="comentarios" rows="3" placeholder="Horario en que preferís que te llamemos, consultas..."></textarea>
+          </div>
+
+          <button type="submit" class="boton">Enviar preinscripción</button>
+        </form>
+
+        <p id="mensaje-exito" class="exito" role="status" hidden></p>
+      </section>
+
+      <aside class="lateral" aria-labelledby="titulo-info">
+        <h2 id="titulo-info">Antes de anotarte</h2>
+        <ul>
+          <li>El DNI va sin puntos: 7 u 8 números.</li>
+          <li>Cada socio puede anotarse en hasta 3 actividades.</li>
+          <li>Con 2 actividades tenés 10 % de descuento y con 3, 15 %.</li>
+          <li>Para inscribirte la cuota social tiene que estar al día.</li>
+        </ul>
+        <p>¿Dudas? Escribinos a <a href="mailto:secretaria@losalgarrobos.org.ar">secretaria@losalgarrobos.org.ar</a>.</p>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="pie">
+    <p>&copy; 2026 Club Social y Deportivo Los Algarrobos · Córdoba, Argentina</p>
+    <p><a href="index.html">Inicio</a> · <a href="actividades.html">Actividades</a> · <a href="preinscripcion.html">Preinscripción</a></p>
+  </footer>
+
+  <script src="js/comun.js"></script>
+  <script src="js/preinscripcion.js"></script>
+</body>
+</html>

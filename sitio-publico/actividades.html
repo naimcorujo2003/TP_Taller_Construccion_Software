@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Actividades, horarios y cuotas del Club Los Algarrobos.">
+  <title>Club Los Algarrobos | Actividades</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header class="encabezado">
+    <a class="marca" href="index.html">
+      <img src="img/logo.svg" alt="Escudo del Club Los Algarrobos: un algarrobo dentro de un círculo verde" width="56" height="56">
+      <span>Club Los Algarrobos</span>
+    </a>
+    <nav aria-label="Navegación principal">
+      <ul class="menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="actividades.html" class="activo" aria-current="page">Actividades</a></li>
+        <li><a href="preinscripcion.html">Preinscripción</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Actividades del club</h1>
+    <p>Elegí una disciplina o escribí tu edad para ver solo las actividades que te sirven.</p>
+
+    <section id="filtros" class="filtros" aria-labelledby="titulo-filtros">
+      <h2 id="titulo-filtros" class="solo-lectores">Filtrar actividades</h2>
+      <div class="campo">
+        <label for="filtro-disciplina">Disciplina</label>
+        <select id="filtro-disciplina" name="disciplina">
+          <option value="">Todas</option>
+          <!-- Las demás opciones las genera js/actividades.js a partir del arreglo de actividades -->
+        </select>
+      </div>
+      <div class="campo">
+        <label for="filtro-edad">Edad</label>
+        <input type="number" id="filtro-edad" name="edad" min="1" max="120" placeholder="Ej: 10">
+      </div>
+      <button type="button" id="boton-limpiar" class="boton boton--secundario">Limpiar filtros</button>
+    </section>
+
+    <section aria-labelledby="titulo-catalogo">
+      <h2 id="titulo-catalogo">Catálogo <span id="contador" class="contador"></span></h2>
+      <div id="lista-actividades" class="grilla-tarjetas" aria-live="polite">
+        <!-- Las tarjetas (article) se crean con JavaScript -->
+      </div>
+      <p id="sin-resultados" class="aviso" hidden>No hay actividades que coincidan con el filtro.</p>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <p>&copy; 2026 Club Social y Deportivo Los Algarrobos · Córdoba, Argentina</p>
+    <p><a href="index.html">Inicio</a> · <a href="actividades.html">Actividades</a> · <a href="preinscripcion.html">Preinscripción</a></p>
+  </footer>
+
+  <script src="js/comun.js"></script>
+  <script src="js/actividades.js"></script>
+</body>
+</html>
