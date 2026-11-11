@@ -10,6 +10,7 @@ Tres "caras" comparten una sola base de datos MySQL y un solo backend Spring Boo
 | Integrante | Parte a cargo |
 |---|---|
 | Naim Corujo | Backend: Partes B y C |
+| SantiagoPerez04 | Sitio público: Parte A |
 | _completar_ | _completar_ |
 | _completar_ | _completar_ |
 | _completar_ | _completar_ |
@@ -20,7 +21,7 @@ Grupo N.º: _completar_
 
 | Carpeta | Contenido | Parte | Estado |
 |---|---|---|---|
-| [`/sitio-publico`](sitio-publico) | HTML5, CSS3 y JavaScript: sitio público del club | A | Pendiente |
+| [`/sitio-publico`](sitio-publico) | HTML5, CSS3 y JavaScript: sitio público del club | A | Listo |
 | [`/backend`](backend) | Spring Boot + Thymeleaf + JPA + API REST | B y C | Listo |
 | [`/app-socios`](app-socios) | App React "Mi Club" para socios | D y E | Pendiente |
 | [`/database`](database) | `socioclub.sql`: creación de tablas y datos iniciales | — | Listo |
@@ -77,7 +78,7 @@ Al arrancar crea las tablas y carga los datos iniciales (las 8 actividades del c
 
 ### 3. Sitio público
 
-Abrir `sitio-publico/index.html` en el navegador (no necesita servidor). _Pendiente: la Parte A todavía no está subida._
+Abrir `sitio-publico/index.html` en el navegador (no necesita servidor). Es un sitio estático: el catálogo sale de un arreglo de objetos en JavaScript y el formulario de preinscripción solo se valida en el cliente (no se conecta al backend). Detalles en [`sitio-publico/README.md`](sitio-publico/README.md).
 
 ### 4. App React "Mi Club" (puerto 3000)
 
@@ -109,6 +110,7 @@ Yoga está llena (15/15) para probar la regla de cupo (RN1). La lista completa d
 |---|---|
 | Backend (JUnit + Mockito + MockMvc, sin MySQL) | `cd backend && mvn test` |
 | API (Postman) | Importar `backend/postman/SocioClub.postman_collection.json` |
+| Sitio público (Jest + jsdom) | `cd sitio-publico && npm install && npm test` |
 | Jest + React Testing Library | `cd app-socios && npm test` _(pendiente)_ |
 
 ## Documentación
