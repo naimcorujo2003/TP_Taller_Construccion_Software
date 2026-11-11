@@ -5,6 +5,7 @@ import Pie from './componentes/Pie';
 import Ingreso from './componentes/Ingreso';
 import ListaActividades from './componentes/ListaActividades';
 import DetalleActividad from './componentes/DetalleActividad';
+import MisActividades from './componentes/MisActividades';
 import RutaProtegida from './componentes/RutaProtegida';
 import './estilos/App.css';
 
@@ -30,6 +31,14 @@ function App() {
                 element={
                   <RutaProtegida>
                     <DetalleActividad />
+                  </RutaProtegida>
+                }
+              />
+              <Route
+                path="/mis-actividades"
+                element={
+                  <RutaProtegida>
+                    <MisActividades />
                   </RutaProtegida>
                 }
               />
