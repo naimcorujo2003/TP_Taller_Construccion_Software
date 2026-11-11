@@ -28,6 +28,7 @@ function DetalleActividad() {
   const manejarInscripcion = async () => {
     setEnviando(true);
     setErrorInscripcion('');
+    setExito(false); // drop the previous result so old and new messages never coexist
     try {
       await inscribirSocio(socio.id, actividad.id);
       setExito(true);
