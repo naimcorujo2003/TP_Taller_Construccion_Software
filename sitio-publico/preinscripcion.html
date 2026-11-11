@@ -44,46 +44,46 @@
         <form id="form-preinscripcion" novalidate>
           <div class="campo">
             <label for="nombre">Nombre <span class="obligatorio">*</span></label>
-            <input type="text" id="nombre" name="nombre" autocomplete="given-name">
+            <input type="text" id="nombre" aria-describedby="error-nombre" name="nombre" autocomplete="given-name">
             <span class="mensaje-error" id="error-nombre"></span>
           </div>
           <div class="campo">
             <label for="apellido">Apellido <span class="obligatorio">*</span></label>
-            <input type="text" id="apellido" name="apellido" autocomplete="family-name">
+            <input type="text" id="apellido" aria-describedby="error-apellido" name="apellido" autocomplete="family-name">
             <span class="mensaje-error" id="error-apellido"></span>
           </div>
           <div class="campo">
             <label for="dni">DNI <span class="obligatorio">*</span></label>
-            <input type="text" id="dni" name="dni" inputmode="numeric" placeholder="Sin puntos, ej: 40111001">
+            <input type="text" id="dni" aria-describedby="error-dni" name="dni" inputmode="numeric" placeholder="Sin puntos, ej: 40111001">
             <span class="mensaje-error" id="error-dni"></span>
           </div>
           <div class="campo">
             <label for="fechaNacimiento">Fecha de nacimiento <span class="obligatorio">*</span></label>
-            <input type="date" id="fechaNacimiento" name="fechaNacimiento">
+            <input type="date" id="fechaNacimiento" aria-describedby="error-fechaNacimiento" name="fechaNacimiento">
             <span class="mensaje-error" id="error-fechaNacimiento"></span>
           </div>
           <div class="campo">
             <label for="email">Email <span class="obligatorio">*</span></label>
-            <input type="email" id="email" name="email" autocomplete="email" placeholder="nombre@mail.com">
+            <input type="email" id="email" aria-describedby="error-email" name="email" autocomplete="email" placeholder="nombre@mail.com">
             <span class="mensaje-error" id="error-email"></span>
           </div>
           <div class="campo">
             <label for="telefono">Teléfono</label>
-            <input type="tel" id="telefono" name="telefono" autocomplete="tel" placeholder="351 555-1234">
+            <input type="tel" id="telefono" aria-describedby="error-telefono" name="telefono" autocomplete="tel" placeholder="351 555-1234">
             <span class="mensaje-error" id="error-telefono"></span>
           </div>
           <div class="campo campo--ancho">
             <label for="actividad">Actividad <span class="obligatorio">*</span></label>
-            <select id="actividad" name="actividad">
+            <select id="actividad" aria-describedby="error-actividad" name="actividad">
               <option value="">Elegí una actividad</option>
-              <option value="Fútbol infantil">Fútbol infantil (6 a 12 años)</option>
-              <option value="Vóley mixto">Vóley mixto (13 a 60 años)</option>
-              <option value="Básquet juvenil">Básquet juvenil (12 a 17 años)</option>
-              <option value="Natación">Natación (5 a 70 años)</option>
-              <option value="Patín artístico">Patín artístico (5 a 15 años)</option>
-              <option value="Ajedrez">Ajedrez (8 a 99 años)</option>
-              <option value="Funcional adultos">Funcional adultos (18 a 65 años)</option>
-              <option value="Yoga">Yoga (16 a 99 años)</option>
+              <option value="Fútbol infantil" data-edad-min="6" data-edad-max="12">Fútbol infantil (6 a 12 años)</option>
+              <option value="Vóley mixto" data-edad-min="13" data-edad-max="60">Vóley mixto (13 a 60 años)</option>
+              <option value="Básquet juvenil" data-edad-min="12" data-edad-max="17">Básquet juvenil (12 a 17 años)</option>
+              <option value="Natación" data-edad-min="5" data-edad-max="70">Natación (5 a 70 años)</option>
+              <option value="Patín artístico" data-edad-min="5" data-edad-max="15">Patín artístico (5 a 15 años)</option>
+              <option value="Ajedrez" data-edad-min="8" data-edad-max="99">Ajedrez (8 a 99 años)</option>
+              <option value="Funcional adultos" data-edad-min="18" data-edad-max="65">Funcional adultos (18 a 65 años)</option>
+              <option value="Yoga" data-edad-min="16" data-edad-max="99">Yoga (16 a 99 años)</option>
             </select>
             <span class="mensaje-error" id="error-actividad"></span>
           </div>

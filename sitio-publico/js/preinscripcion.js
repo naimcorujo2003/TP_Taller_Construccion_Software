@@ -13,6 +13,32 @@ function esEmailValido(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+// Al menos 6 números; además se permiten espacios, guiones, paréntesis y "+"
+function esTelefonoValido(telefono) {
+  const cantidadDeNumeros = telefono.replace(/\D/g, '').length;
+  return /^[\d\s()+-]{6,20}$/.test(telefono) && cantidadDeNumeros >= 6;
+}
+
+// Fecha de hoy en hora LOCAL con formato "AAAA-MM-DD", igual que el valor de un <input type="date">.
+// No se usa new Date("AAAA-MM-DD") porque eso es medianoche en UTC (21 h del día anterior en Argentina).
+function fechaDeHoy() {
+  const hoy = new Date();
+  const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+  const dia = String(hoy.getDate()).padStart(2, '0');
+  return hoy.getFullYear() + '-' + mes + '-' + dia;
+}
+
+// Años cumplidos a hoy (si el cumpleaños es mañana, todavía no suma)
+function calcularEdad(fechaNacimiento) {
+  const [anio, mes, dia] = fechaNacimiento.split('-').map(Number);
+  const [anioHoy, mesHoy, diaHoy] = fechaDeHoy().split('-').map(Number);
+  let edad = anioHoy - anio;
+  if (mesHoy < mes || (mesHoy === mes && diaHoy < dia)) {
+    edad--;
+  }
+  return edad;
+}
+
 // Muestra (o borra, si el mensaje está vacío) el error de un campo
 function mostrarError(idCampo, mensaje) {
   const campo = document.getElementById(idCampo);
@@ -58,8 +84,23 @@ function validarFormulario() {
 
   if (fechaNacimiento === '') {
     errores.fechaNacimiento = 'Ingresá tu fecha de nacimiento.';
-  } else if (new Date(fechaNacimiento) > new Date()) {
+  } else if (fechaNacimiento > fechaDeHoy()) {
+    // Las fechas "AAAA-MM-DD" se pueden comparar como texto: el orden alfabético es el cronológico
     errores.fechaNacimiento = 'La fecha no puede ser futura.';
+  } else if (calcularEdad(fechaNacimiento) > 120) {
+    errores.fechaNacimiento = 'Revisá la fecha de nacimiento.';
+  }
+
+  // Con una fecha válida y una actividad elegida, la edad tiene que entrar en el rango de esa actividad.
+  // El rango sale de los atributos data-edad-min / data-edad-max de la opción del <select>.
+  const opcion = formulario.elements.actividad.selectedOptions[0];
+  if (actividad !== '' && fechaNacimiento !== '' && !errores.fechaNacimiento) {
+    const edad = calcularEdad(fechaNacimiento);
+    const minima = Number(opcion.dataset.edadMin);
+    const maxima = Number(opcion.dataset.edadMax);
+    if (edad < minima || edad > maxima) {
+      errores.actividad = actividad + ' es para edades de ' + minima + ' a ' + maxima + ' años.';
+    }
   }
 
   if (email === '') {
@@ -68,8 +109,8 @@ function validarFormulario() {
     errores.email = 'El email no tiene un formato válido (ej: nombre@mail.com).';
   }
 
-  if (telefono !== '' && !/^[\d\s()+-]{6,20}$/.test(telefono)) {
-    errores.telefono = 'El teléfono solo puede tener números, espacios y guiones.';
+  if (telefono !== '' && !esTelefonoValido(telefono)) {
+    errores.telefono = 'Ingresá al menos 6 números (podés usar espacios, guiones y paréntesis).';
   }
 
   let valido = true;
@@ -119,5 +160,5 @@ if (actividadElegida) {
 
 // Solo para las pruebas con Jest: en el navegador "module" no existe y esto se ignora
 if (typeof module !== 'undefined') {
-  module.exports = { esDniValido, esEmailValido, validarFormulario };
+  module.exports = { esDniValido, esEmailValido, esTelefonoValido, calcularEdad, validarFormulario };
 }
