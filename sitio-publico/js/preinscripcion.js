@@ -30,13 +30,13 @@ function mostrarError(idCampo, mensaje) {
 
 // Valida todos los campos; devuelve true si no hay errores
 function validarFormulario() {
-  const nombre = formulario.nombre.value.trim();
-  const apellido = formulario.apellido.value.trim();
-  const dni = formulario.dni.value.trim();
-  const fechaNacimiento = formulario.fechaNacimiento.value;
-  const email = formulario.email.value.trim();
-  const telefono = formulario.telefono.value.trim();
-  const actividad = formulario.actividad.value;
+  const nombre = formulario.elements.nombre.value.trim();
+  const apellido = formulario.elements.apellido.value.trim();
+  const dni = formulario.elements.dni.value.trim();
+  const fechaNacimiento = formulario.elements.fechaNacimiento.value;
+  const email = formulario.elements.email.value.trim();
+  const telefono = formulario.elements.telefono.value.trim();
+  const actividad = formulario.elements.actividad.value;
 
   const errores = {
     nombre: nombre === '' ? 'Ingresá tu nombre.' : '',
@@ -93,8 +93,8 @@ formulario.addEventListener('submit', function (evento) {
     return;
   }
 
-  const nombre = formulario.nombre.value.trim();
-  const actividad = formulario.actividad.value;
+  const nombre = formulario.elements.nombre.value.trim();
+  const actividad = formulario.elements.actividad.value;
   mensajeExito.textContent = '¡Gracias, ' + nombre + '! Recibimos tu preinscripción a ' + actividad +
     '. La secretaría se va a comunicar con vos para confirmarla.';
   mensajeExito.hidden = false;
@@ -113,5 +113,10 @@ formulario.addEventListener('focusout', function (evento) {
 const parametros = new URLSearchParams(window.location.search);
 const actividadElegida = parametros.get('actividad');
 if (actividadElegida) {
-  formulario.actividad.value = actividadElegida;
+  formulario.elements.actividad.value = actividadElegida;
+}
+
+// Solo para las pruebas con Jest: en el navegador "module" no existe y esto se ignora
+if (typeof module !== 'undefined') {
+  module.exports = { esDniValido, esEmailValido, validarFormulario };
 }
