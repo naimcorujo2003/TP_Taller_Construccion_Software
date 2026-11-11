@@ -95,8 +95,10 @@ describe('formulario de preinscripción', () => {
 
     const exito = document.getElementById('mensaje-exito');
     expect(exito.hidden).toBe(false);
-    expect(exito.textContent).toContain('¡Gracias, Ana!');
-    expect(exito.textContent).toContain('Yoga');
+    expect(document.getElementById('exito-titulo').textContent).toBe('¡Gracias, Ana!');
+    expect(document.getElementById('exito-texto').textContent).toBe(
+      'Recibimos tu preinscripción a Yoga. La secretaría se va a comunicar con vos para confirmarla.'
+    );
     expect(formulario.elements.nombre.value).toBe('');
     expect(error('dni')).toBe('');
     expect(formulario.querySelectorAll('.campo-error')).toHaveLength(0);

@@ -9,9 +9,13 @@ beforeEach(() => {
 const nombresVisibles = () =>
   [...document.querySelectorAll('#lista-actividades article h3')].map((h) => h.textContent);
 
-function cambiar(elemento, valor, evento) {
-  elemento.value = valor;
-  elemento.dispatchEvent(new Event(evento));
+const pastilla = (texto) =>
+  [...document.querySelectorAll('#filtro-disciplina .pastilla')].find((b) => b.textContent === texto);
+
+function escribirEdad(valor) {
+  const input = document.getElementById('filtro-edad');
+  input.value = valor;
+  input.dispatchEvent(new Event('input'));
 }
 
 describe('clase Actividad', () => {
@@ -34,52 +38,72 @@ describe('clase Actividad', () => {
     expect(futbol.cuotaFormateada()).toBe('$ 18.000');
   });
 
-  test('crearTarjeta arma un article con nombre, precio y enlace a la preinscripción', () => {
+  test('crearTarjeta arma el article como en el diseño', () => {
     const tarjeta = futbol.crearTarjeta();
     expect(tarjeta.tagName).toBe('ARTICLE');
+    expect(tarjeta.querySelector('.etiqueta').textContent).toBe('Fútbol');
     expect(tarjeta.querySelector('h3').textContent).toBe('Fútbol infantil');
-    expect(tarjeta.querySelector('.precio').textContent).toBe('$ 18.000 / mes');
-    expect(tarjeta.querySelector('a').getAttribute('href'))
-      .toBe('preinscripcion.html?actividad=F%C3%BAtbol%20infantil');
-    expect(tarjeta.dataset.publico).toBe('infantil');
+
+    const datos = [...tarjeta.querySelectorAll('.tarjeta__datos li')].map((li) => li.textContent);
+    expect(datos).toEqual(['Lun y Mié · 18:00', '6 a 12 años', 'Prof. Diego Ferreyra']);
+    expect(tarjeta.querySelectorAll('.tarjeta__datos svg')).toHaveLength(3);
+
+    expect(tarjeta.querySelector('.precio').textContent).toBe('$ 18.000/mes');
+    expect(tarjeta.querySelector('.lugares').textContent).toBe('40 lugares');
+    const enlace = tarjeta.querySelector('a.boton');
+    expect(enlace.textContent).toBe('Preinscribirme');
+    expect(enlace.getAttribute('href')).toBe('preinscripcion.html?actividad=F%C3%BAtbol%20infantil');
   });
 });
 
 describe('catálogo en actividades.html', () => {
   test('al cargar muestra las 8 actividades del club', () => {
     expect(nombresVisibles()).toHaveLength(8);
-    expect(document.getElementById('contador').textContent).toBe('(8 de 8)');
     expect(document.getElementById('sin-resultados').hidden).toBe(true);
   });
 
-  test('el select de disciplinas se genera ordenado y sin repetidos', () => {
-    const opciones = [...document.querySelectorAll('#filtro-disciplina option')].map((o) => o.value);
-    expect(opciones).toEqual(['', 'Ajedrez', 'Básquet', 'Bienestar', 'Fitness', 'Fútbol', 'Natación', 'Patín', 'Vóley']);
+  test('genera una pastilla por disciplina, sin repetir y en el orden del catálogo', () => {
+    const textos = [...document.querySelectorAll('#filtro-disciplina .pastilla')].map((b) => b.textContent);
+    expect(textos).toEqual(['Todas', 'Fútbol', 'Vóley', 'Básquet', 'Natación', 'Patín', 'Ajedrez', 'Fitness', 'Bienestar']);
+    expect(pastilla('Todas').getAttribute('aria-pressed')).toBe('true');
   });
 
-  test('filtrar por disciplina deja solo esa actividad', () => {
-    cambiar(document.getElementById('filtro-disciplina'), 'Natación', 'change');
+  test('al tocar una pastilla queda marcada y filtra por esa disciplina', () => {
+    pastilla('Natación').click();
+
     expect(nombresVisibles()).toEqual(['Natación']);
+    expect(pastilla('Natación').getAttribute('aria-pressed')).toBe('true');
+    expect(pastilla('Todas').getAttribute('aria-pressed')).toBe('false');
+  });
+
+  test('"Todas" vuelve a mostrar el catálogo completo', () => {
+    pastilla('Ajedrez').click();
+    pastilla('Todas').click();
+    expect(nombresVisibles()).toHaveLength(8);
   });
 
   test('filtrar por edad 14 saca Fútbol infantil (6 a 12) y deja las aptas', () => {
-    cambiar(document.getElementById('filtro-edad'), '14', 'input');
+    escribirEdad('14');
     expect(nombresVisibles()).toEqual(['Vóley mixto', 'Básquet juvenil', 'Natación', 'Patín artístico', 'Ajedrez']);
   });
 
+  test('disciplina y edad se combinan', () => {
+    escribirEdad('70');
+    pastilla('Natación').click();
+    expect(nombresVisibles()).toEqual(['Natación']);
+  });
+
   test('si ningún filtro coincide muestra el aviso "No hay actividades"', () => {
-    cambiar(document.getElementById('filtro-disciplina'), 'Fútbol', 'change');
-    cambiar(document.getElementById('filtro-edad'), '14', 'input');
+    pastilla('Fútbol').click();
+    escribirEdad('14');
     expect(nombresVisibles()).toHaveLength(0);
     expect(document.getElementById('sin-resultados').hidden).toBe(false);
   });
 
-  test('"Limpiar filtros" vuelve a mostrar todo', () => {
-    cambiar(document.getElementById('filtro-edad'), '70', 'input');
+  test('borrar la edad vuelve a mostrar todo', () => {
+    escribirEdad('70');
     expect(nombresVisibles()).toEqual(['Natación', 'Ajedrez', 'Yoga']);
-
-    document.getElementById('boton-limpiar').click();
+    escribirEdad('');
     expect(nombresVisibles()).toHaveLength(8);
-    expect(document.getElementById('filtro-edad').value).toBe('');
   });
 });

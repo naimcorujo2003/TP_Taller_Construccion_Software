@@ -47,7 +47,8 @@ describe.each(paginas)('%s', (pagina) => {
     expect(hrefs).toEqual(expect.arrayContaining(paginas));
 
     const locales = [...doc.querySelectorAll('link[href], script[src], img[src]')]
-      .map((e) => e.getAttribute('href') || e.getAttribute('src'));
+      .map((e) => e.getAttribute('href') || e.getAttribute('src'))
+      .filter((ruta) => !/^https?:\/\//.test(ruta)); // la tipografía viene de Google Fonts
     locales.forEach((ruta) => {
       expect(fs.existsSync(path.join(__dirname, '..', ruta))).toBe(true);
     });
@@ -67,6 +68,7 @@ test('estilos.css tiene selectores de tipo, clase, ID y atributo, y una media qu
   expect(css).toMatch(/^body\s*\{/m);              // tipo
   expect(css).toMatch(/^\.tarjeta\s*\{/m);         // clase
   expect(css).toMatch(/^#filtros\s*\{/m);          // ID
-  expect(css).toMatch(/\[type="email"\]/);         // atributo
+  expect(css).toMatch(/\[aria-pressed="true"\]/);  // atributo
+  expect(css).toMatch(/\[aria-invalid="true"\]/);  // atributo
   expect(css).toMatch(/@media \(max-width: 600px\)/);
 });
