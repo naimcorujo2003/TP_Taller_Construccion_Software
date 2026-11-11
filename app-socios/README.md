@@ -1,70 +1,61 @@
-# Getting Started with Create React App
+# Mi Club - app React para socios (Parte D)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+App creada con create-react-app. Consume la API REST del backend (`../backend`) usando Axios; todas las llamadas
+están en `src/servicios/api.js`.
 
-## Available Scripts
+## Cómo correrla
 
-In the project directory, you can run:
+1. Levantar el backend (ver `../backend/README.md`): MySQL con `docker compose up -d` y `mvn spring-boot:run`.
+2. En esta carpeta:
 
-### `npm start`
+```bash
+npm install
+npm start          # http://localhost:3000
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### URL de la API
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Por defecto usa `http://localhost:8080/api`. Si el backend corre en otro puerto (por ejemplo `SERVER_PORT=8081`):
 
-### `npm test`
+```bash
+REACT_APP_API_URL=http://localhost:8081/api npm start
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+También se puede guardar en un archivo `.env.local` (ver `.env.example`). El backend permite CORS solo desde
+`http://localhost:3000`.
 
-### `npm run build`
+## Rutas
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+| Ruta | Pantalla |
+|---|---|
+| `/` | Ingreso por DNI (valida 7 u 8 dígitos y busca el socio en la API) |
+| `/actividades` | Catálogo con filtro por disciplina y cupo disponible |
+| `/actividades/:id` | Detalle de la actividad y botón "Inscribirme" (muestra el mensaje 409 de la API) |
+| `/mis-actividades` | Inscripciones activas, "Darme de baja" y cuota mensual estimada (RN6) |
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Pruebas
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm test -- --watchAll=false
+npm run build
+```
 
-### `npm run eject`
+Jest + React Testing Library; no necesitan el backend.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- `src/utils`: `calcularCuotaMensual` (RN6) y `esDniValido` (RN7).
+- `src/componentes`: `TarjetaActividad` y `ResumenCuota`.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## DNIs de prueba (datos de `data.sql`)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+| Para probar | Socio | DNI |
+|---|---|---|
+| Inscripción exitosa | Mateo Gómez | `40111001` |
+| Chico de 5 años (RN3 en Fútbol infantil) | Tomás Acosta | `40111005` |
+| Chica de 14 años (RN3 en Fútbol infantil) | Camila Ledesma | `40222001` |
+| Moroso (RN4) | Nicolás Peralta | `37333008` |
+| Moroso (RN4) | Mónica Aguirre | `27333009` |
+| Ya tiene 3 actividades (RN5) | Laura Fernández | `28333001` |
+| Ya inscripta en Fútbol infantil (RN2) | Sofía Díaz | `40111002` |
+| Para llenar el último lugar de Ajedrez | Sabrina Quiroga | `39333015` |
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Yoga (id 8) está llena (RN1); Ajedrez (id 6) tiene un lugar libre.

@@ -29,4 +29,23 @@ describe('TarjetaActividad', () => {
     expect(screen.getByText('Sin cupo')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /inscribirme/i })).toBeDisabled();
   });
+
+  test('clicking the button calls onVerDetalle with the activity id', () => {
+    const manejarVer = jest.fn();
+    render(<TarjetaActividad actividad={actividadConCupo} onVerDetalle={manejarVer} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /inscribirme/i }));
+
+    expect(manejarVer).toHaveBeenCalledWith(1);
+  });
+
+  test('with no places left the card gets the grey modifier class and the click does nothing', () => {
+    const manejarVer = jest.fn();
+    const llena = { ...actividadConCupo, cupoDisponible: 0 };
+    const { container } = render(<TarjetaActividad actividad={llena} onVerDetalle={manejarVer} />);
+
+    expect(container.firstChild).toHaveClass('tarjeta--sin-cupo');
+    fireEvent.click(screen.getByRole('button', { name: /inscribirme/i }));
+    expect(manejarVer).not.toHaveBeenCalled();
+  });
 });
