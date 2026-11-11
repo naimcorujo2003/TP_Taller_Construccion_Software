@@ -51,7 +51,7 @@ Los controladores MVC y los REST usan **la misma capa de servicio**: una inscrip
 - Java 17
 - Maven (o el `./mvnw` incluido en `backend/`)
 - Docker (solo para levantar MySQL)
-- Node.js y npm (para la app React, cuando esté disponible)
+- Node.js y npm (para el sitio público y la app React)
 
 ## Cómo levantar el proyecto
 
@@ -117,4 +117,5 @@ Yoga está llena (15/15) para probar la regla de cupo (RN1). La lista completa d
 ## Documentación
 
 - [`backend/README.md`](backend/README.md): endpoints (Anexo A), datos de prueba, estructura de paquetes y puntos clave para la defensa.
+- [`docs/informe-tecnico.md`](docs/informe-tecnico.md) y [`docs/bitacora-ia.md`](docs/bitacora-ia.md): borradores del informe y de la bitácora de IA (se completan y se entregan en PDF).
 - Informe técnico en PDF y bitácora de uso de IA: se entregan por el aula virtual como `TPI_SocioClub_GrupoN.pdf`.
