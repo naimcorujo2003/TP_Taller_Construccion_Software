@@ -156,3 +156,8 @@ botonLimpiar.addEventListener('click', function () {
 // Primera carga
 cargarDisciplinas();
 mostrarActividades(actividades);
+
+// Solo para las pruebas con Jest: en el navegador "module" no existe y esto se ignora
+if (typeof module !== 'undefined') {
+  module.exports = { Actividad, actividades, filtrar };
+}

@@ -12,6 +12,27 @@ HTML5 + CSS3 + JavaScript, sin frameworks ni servidor. Abrir `index.html` con do
 | `js/preinscripcion.js` | Validación (RN7: DNI de 7 u 8 dígitos sin puntos) |
 | `js/comun.js` | Botón "Volver" con `history.back()` |
 
+## Pruebas automáticas
+
+El sitio no necesita Node para funcionar; Node se usa **solo** para correr las pruebas con Jest y jsdom
+(un navegador simulado que carga las páginas reales y ejecuta sus scripts).
+
+```bash
+cd sitio-publico
+npm install
+npm test
+```
+
+| Archivo | Qué prueba |
+|---|---|
+| `tests/actividades.test.js` | Clase `Actividad` (bordes de edad, formato de cuota, tarjeta) y el filtro por disciplina/edad sobre el DOM |
+| `tests/preinscripcion.test.js` | `esDniValido` (RN7: puntos, letras, 6 y 9 dígitos), errores junto a cada campo, que no use `alert`, mensaje de éxito y preselección por `location.search` |
+| `tests/comun.test.js` | El botón "Volver" llama a `history.back()` |
+| `tests/estructura.test.js` | Las 3 páginas: `meta viewport`, etiquetas semánticas, `alt` en imágenes, IDs únicos, enlaces y archivos existentes, selectores CSS pedidos |
+
+Para que Jest pueda usar las funciones, al final de `actividades.js` y `preinscripcion.js` hay un
+`if (typeof module !== 'undefined') module.exports = ...`. En el navegador `module` no existe y esa línea no hace nada.
+
 ## Requisitos de la materia y dónde están
 
 - **HTML semántico**: `header`, `nav`, `main`, `section`, `article` (cada tarjeta, creada por JS), `aside` y `footer`.
