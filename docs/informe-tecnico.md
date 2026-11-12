@@ -5,7 +5,7 @@
 Taller de Construcción de Software, Universidad Siglo 21. Trabajo Práctico Integrador.
 
 - Grupo N.º: [COMPLETAR: número de grupo]
-- Integrantes: [COMPLETAR: nombres y apellidos de los integrantes]
+- Integrantes: Naim Corujo, Santiago Perez, Benjamín Armitano Carol, Demian Giaiprone, [COMPLETAR: nombre del quinto integrante, si corresponde]
 - Repositorio: https://github.com/naimcorujo2003/TP_Taller_Construccion_Software
 
 ## 1. Descripción de la solución

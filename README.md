@@ -10,9 +10,9 @@ Tres "caras" comparten una sola base de datos MySQL y un solo backend Spring Boo
 | Integrante | Parte a cargo |
 |---|---|
 | Naim Corujo | Backend: Partes B y C |
-| SantiagoPerez04 | Sitio público: Parte A |
-| _completar_ | _completar_ |
-| _completar_ | _completar_ |
+| Santiago Perez | Sitio público: Parte A |
+| Benjamín Armitano Carol | _completar_ |
+| Demian Giaiprone | _completar_ |
 | _completar_ | _completar_ |
 
 Grupo N.º: _completar_
