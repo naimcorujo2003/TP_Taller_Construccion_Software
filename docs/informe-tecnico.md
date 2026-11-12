@@ -93,7 +93,7 @@ Esto es lo que pasa cuando el socio toca "Inscribirme" en la pantalla de detalle
 | **Bean `Clock` inyectable** | La edad se calcula con `Period.between(nacimiento, hoy)` (cuenta solo años cumplidos) y "hoy" sale del `Clock`, así las pruebas fijan la fecha y los casos de borde (cumpleaños mañana) son deterministas. | Un parámetro más en el constructor del servicio. |
 | **Orden RN4, RN2, RN5, RN3, RN1** | Las reglas que dependen solo del socio (o una existencia) se evalúan antes que el conteo de la actividad. También decide qué mensaje ve el usuario si fallan varias a la vez. | El orden es parte del comportamiento: cambiarlo cambia el mensaje devuelto. |
 | **Contar y luego insertar** para el cupo | Es simple y alcanza para la escala del trabajo. | **No es seguro ante concurrencia**: dos pedidos simultáneos por el último lugar podrían pasar ambos. En producción habría que bloquear la actividad (bloqueo pesimista) o usar una restricción en la base. |
-| **Ingreso solo en memoria** (Context, sin `localStorage`) | El enunciado pide ingresar con el DNI sin contraseña; guardar el socio solo en el estado de React evita persistir datos personales en el navegador. | **Al refrescar la página se pierde la sesión** y la ruta protegida redirige al ingreso. |
+| **Sesión en `sessionStorage`** (Context + `sessionStorage`) | El enunciado pide ingresar con el DNI sin contraseña. El socio vive en el Context y se copia a `sessionStorage`, así que sobrevive a un refresco pero se borra al cerrar la pestaña y no queda guardado de forma permanente en el navegador. | Los datos del socio quedan legibles en el navegador mientras dura la pestaña; no hay autenticación real. |
 | **Jest de CRA con `react-router-dom` v7** | La app usa React Router v7, pero el Jest de create-react-app no resuelve ese módulo. | En las pruebas de componentes el router se reemplaza por un doble (stub), sin tocar el código de la app. |
 | **Sitio público estático** | El enunciado define la Parte A sin conexión al backend: catálogo en JavaScript y validación solo en el cliente. | El catálogo del sitio y los datos del backend se mantienen por separado. |
 
@@ -158,6 +158,8 @@ La colección Postman `backend/postman/SocioClub.postman_collection.json` incluy
 
 La secretaría usa vistas renderizadas en el servidor: `/actividades` (listado, alta, edición, baja y listado de inscriptos), `/socios` (listado paginado de 10 por página, alta y edición) e `/inscripciones/nueva` (alta de inscripción, que llama al mismo `InscripcionService.inscribir`). Un `MvcExceptionHandler` muestra los errores de regla y los recursos inexistentes en pantalla.
 
+**Extra: panel de ocupación.** `/ocupacion` muestra, por actividad, los lugares ocupados sobre el cupo máximo con una barra de porcentaje y un estado (*Completa* al 100 %, *Casi completa* desde el 80 % y *Disponible*), más un total general. El cálculo vive en `ActividadService.panelOcupacion()`; el controlador solo llama al servicio. Es un agregado fuera de los requisitos mínimos (sección 10 del enunciado) y está cubierto por 5 pruebas unitarias y una prueba de página.
+
 ## 5. Sitio público y app React "Mi Club"
 
 ### 5.1 Sitio público (Parte A)
@@ -168,6 +170,7 @@ Tres páginas (`index.html`, `actividades.html`, `preinscripcion.html`) con HTML
 
 - Rutas: `/` (ingreso por DNI), `/actividades`, `/actividades/:id` y `/mis-actividades`. Las tres últimas están envueltas en `RutaProtegida`, que redirige al ingreso si no hay socio en el contexto.
 - Estado compartido del socio mediante `createContext` / `useContext` (`ContextoSocio` con `socio`, `ingresar` y `salir`), sin pasar propiedades de componente en componente.
+- **Extra: sesión persistente.** `ContextoSocio` guarda el socio en `sessionStorage` (lectura dentro de `try/catch`, por si el almacenamiento falla o el JSON está corrupto), de modo que un refresco no obliga a ingresar de nuevo. Se borra con `salir` o al cerrar la pestaña.
 - Todas las llamadas a la API pasan por un único módulo, `src/servicios/api.js`, con Axios; la URL base se toma de la variable de entorno `REACT_APP_API_URL` (por defecto `http://localhost:8080/api`).
 - Componentes: `Encabezado`, `Pie`, `Ingreso`, `ListaActividades`, `TarjetaActividad` (muestra "Sin cupo" y deshabilita el botón cuando el cupo es 0), `DetalleActividad`, `MisActividades` y `ResumenCuota`, con PropTypes.
 - Los mensajes de error 409 de la API se muestran en pantalla tal como los devuelve el backend, de modo que la app no duplica el texto de las reglas.
@@ -194,10 +197,10 @@ En los casos 2 a 6 la app muestra en pantalla el mensaje devuelto por la API. Ta
 
 | Alcance | Herramienta | Resultado |
 |---|---|---|
-| Backend (servicio, repositorios, controladores MVC y REST) | `mvn test` (JUnit, Mockito, MockMvc, H2 en memoria solo para pruebas) | 72 pruebas en verde |
+| Backend (servicio, repositorios, controladores MVC y REST) | `mvn test` (JUnit, Mockito, MockMvc, H2 en memoria solo para pruebas) | 78 pruebas en verde |
 | API REST | Colección Postman | 26 requests y 38 aserciones, 0 fallas (newman, 2026-11-11; los 409 verifican código, `regla` y mensaje exacto) |
 | Sitio público | Jest + jsdom | 99 pruebas en verde |
-| App React (`app-socios`) | Jest + React Testing Library | 19 pruebas en verde |
+| App React (`app-socios`) | Jest + React Testing Library | 22 pruebas en verde |
 | Sistema | Casos manuales de la tabla 6.1 | 6 de 6 con el resultado esperado |
 
 Las reglas de negocio se probaron primero a nivel de servicio con Mockito, incluidos los bordes de edad y la baja lógica, sin necesidad de levantar MySQL. Las pruebas de sistema, por su parte, usan datos reales elegidos para que cada caso falle por la regla que se quiere demostrar y no por otra.
@@ -230,12 +233,12 @@ Las reglas de negocio se probaron primero a nivel de servicio con Mockito, inclu
 - **El ciclo JSON se resolvió con DTOs.** La relación bidireccional `Socio` e `Inscripcion` rompía la serialización; los registros planos solucionaron el bucle y dejaron explícito el contrato de la API.
 - **El desarrollo guiado por pruebas encontró errores reales.** Un ejemplo es el mensaje de éxito obsoleto: al repetir una inscripción, la pantalla de detalle mostraba el éxito anterior junto al error de RN2. Se reprodujo con una prueba de Jest que fallaba y se corrigió reiniciando el indicador antes de cada intento.
 - **Probar en vivo complementa las pruebas automáticas.** Los casos de sistema contra MySQL, backend y app reales mostraron datos de prueba mal elegidos (un socio que fallaba por una regla distinta a la buscada) que las pruebas unitarias no podían detectar.
-- **Dejar documentadas las limitaciones.** Conviene decir qué no se resolvió (concurrencia, sesión en memoria) en lugar de ocultarlo.
+- **Dejar documentadas las limitaciones.** Conviene decir qué no se resolvió (concurrencia, ausencia de autenticación real) en lugar de ocultarlo.
 
 ### 8.2 Limitaciones y trabajo futuro
 
 - **Concurrencia en el cupo.** El control cuenta y luego inserta. Mejora: bloqueo pesimista sobre la actividad o una restricción en la base de datos.
-- **Sesión solo en memoria.** Al refrescar la app el socio vuelve al ingreso. Mejora: autenticación real (por ejemplo con tokens) y persistencia de la sesión.
+- **Sesión sin autenticación real.** La sesión sobrevive al refresco gracias a `sessionStorage`, pero el ingreso es solo por DNI y no hay forma de verificar quién es el socio. Mejora: autenticación real (por ejemplo con tokens).
 - **Ingreso solo por DNI.** No hay contraseña ni roles en el backoffice; no se pensó para internet abierto.
 - **Base recreada en cada arranque.** `ddl-auto=create` borra los datos; en producción se usarían migraciones versionadas.
 - **Sitio público sin conexión al backend por diseño.** El catálogo del sitio y el de la base se mantienen por separado.
