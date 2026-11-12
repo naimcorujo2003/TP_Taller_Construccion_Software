@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Ocupación')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header('ocupacion')}"></header>
+<main class="contenedor">
+    <div class="barra-titulo">
+        <h1>Panel de ocupación</h1>
+    </div>
+    <div th:replace="~{fragments/layout :: mensajes}"></div>
+
+    <p class="totales">
+        Total ocupados: <strong th:text="${panel.totalOcupados} + ' / ' + ${panel.totalCupos}">10 / 30</strong> cupos
+    </p>
+
+    <table class="tabla">
+        <thead>
+        <tr>
+            <th>Actividad</th>
+            <th>Disciplina</th>
+            <th>Ocupados</th>
+            <th>Cupo máximo</th>
+            <th>Ocupación</th>
+            <th>Estado</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="o : ${panel.actividades}">
+            <td th:text="${o.nombre}">Yoga</td>
+            <td th:text="${o.disciplina}">Bienestar</td>
+            <td th:text="${o.ocupados}">15</td>
+            <td th:text="${o.cupoMaximo}">15</td>
+            <td>
+                <div class="barra-ocupacion" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                     th:attr="aria-valuenow=${o.porcentaje}">
+                    <div class="barra-ocupacion-relleno"
+                         th:classappend="${o.estado == 'Completa'} ? 'completa' : (${o.estado == 'Casi completa'} ? 'casi')"
+                         th:style="'width: ' + ${o.porcentaje} + '%'"></div>
+                </div>
+                <span class="porcentaje" th:text="${o.porcentaje} + '%'">100%</span>
+            </td>
+            <td>
+                <span class="etiqueta"
+                      th:classappend="${o.estado == 'Disponible'} ? 'ok' : (${o.estado == 'Completa'} ? 'error' : 'aviso')"
+                      th:text="${o.estado}">Completa</span>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(panel.actividades)}">
+            <td colspan="6">No hay actividades para mostrar.</td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
