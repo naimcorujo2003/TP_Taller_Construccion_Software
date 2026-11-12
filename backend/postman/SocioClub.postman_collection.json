@@ -375,7 +375,9 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 409\", function () { pm.response.to.have.status(409); });"
+                  "pm.test(\"Status 409\", function () { pm.response.to.have.status(409); });",
+                  "pm.test(\"Body reports rule ACTIVIDAD_CON_INSCRIPTOS\", function () { pm.expect(pm.response.json().regla).to.eql(\"ACTIVIDAD_CON_INSCRIPTOS\"); });",
+                  "pm.test(\"Error message is present\", function () { pm.expect(pm.response.json().error).to.be.a(\"string\").and.not.empty; });"
                 ]
               }
             }
@@ -588,7 +590,9 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 409\", function () { pm.response.to.have.status(409); });"
+                  "pm.test(\"Status 409\", function () { pm.response.to.have.status(409); });",
+                  "pm.test(\"Body reports rule RN1\", function () { pm.expect(pm.response.json().regla).to.eql(\"RN1\"); });",
+                  "pm.test(\"Error message is the exact rule text\", function () { pm.expect(pm.response.json().error).to.eql(\"La actividad no tiene cupo disponible\"); });"
                 ]
               }
             }
@@ -631,7 +635,9 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 409\", function () { pm.response.to.have.status(409); });"
+                  "pm.test(\"Status 409\", function () { pm.response.to.have.status(409); });",
+                  "pm.test(\"Body reports rule RN2\", function () { pm.expect(pm.response.json().regla).to.eql(\"RN2\"); });",
+                  "pm.test(\"Error message is the exact rule text\", function () { pm.expect(pm.response.json().error).to.eql(\"El socio ya está inscripto en esta actividad\"); });"
                 ]
               }
             }
@@ -674,7 +680,9 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 409\", function () { pm.response.to.have.status(409); });"
+                  "pm.test(\"Status 409\", function () { pm.response.to.have.status(409); });",
+                  "pm.test(\"Body reports rule RN3\", function () { pm.expect(pm.response.json().regla).to.eql(\"RN3\"); });",
+                  "pm.test(\"Error message states the allowed range\", function () { pm.expect(pm.response.json().error).to.include(\"rango permitido\"); });"
                 ]
               }
             }
@@ -717,7 +725,9 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 409\", function () { pm.response.to.have.status(409); });"
+                  "pm.test(\"Status 409\", function () { pm.response.to.have.status(409); });",
+                  "pm.test(\"Body reports rule RN4\", function () { pm.expect(pm.response.json().regla).to.eql(\"RN4\"); });",
+                  "pm.test(\"Error message is the exact rule text\", function () { pm.expect(pm.response.json().error).to.eql(\"Debe regularizar su cuota en secretaría\"); });"
                 ]
               }
             }
@@ -760,7 +770,9 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 409\", function () { pm.response.to.have.status(409); });"
+                  "pm.test(\"Status 409\", function () { pm.response.to.have.status(409); });",
+                  "pm.test(\"Body reports rule RN5\", function () { pm.expect(pm.response.json().regla).to.eql(\"RN5\"); });",
+                  "pm.test(\"Error message is the exact rule text\", function () { pm.expect(pm.response.json().error).to.eql(\"Alcanzó el máximo de 3 actividades\"); });"
                 ]
               }
             }
