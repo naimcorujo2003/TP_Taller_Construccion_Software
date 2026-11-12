@@ -91,6 +91,28 @@ npm start
 
 Por defecto la app llama a `http://localhost:8080/api`. Si el backend corre en otro puerto (por ejemplo `SERVER_PORT=8081`), arrancarla con `REACT_APP_API_URL=http://localhost:8081/api npm start`. El backend permite CORS para `http://localhost:3000`. Más detalles en [`app-socios/README.md`](app-socios/README.md).
 
+## Atajo con Docker (opcional)
+
+Alternativa para levantar todo el sistema (MySQL, backend, app React y sitio público) con un solo comando desde la raíz del repositorio. Los pasos manuales de arriba siguen siendo válidos y son el método principal.
+
+```bash
+docker compose up --build
+```
+
+La primera vez tarda unos minutos porque construye las imágenes. Después:
+
+| Servicio | URL |
+|---|---|
+| App React "Mi Club" | http://localhost:3000 |
+| API del backend | http://localhost:8080/api |
+| Vista web del backend | http://localhost:8080/actividades |
+| Sitio público | http://localhost:8090 |
+
+- Si el puerto 8080 está ocupado (por ejemplo por Docker Desktop), usar otro: `BACKEND_PORT=8081 docker compose up --build`. La app se compila apuntando a ese puerto.
+- La app React queda siempre en el puerto 3000, porque el backend solo permite CORS para `http://localhost:3000`.
+- Para detener y borrar también la base de datos: `docker compose down -v`.
+- No ejecutarlo junto con el `docker compose` manual de `backend/` (comparten el nombre del volumen y el puerto 3306 de la base).
+
 ## Usuarios (DNI) de prueba
 
 La app de socios ingresa solo con el DNI.
