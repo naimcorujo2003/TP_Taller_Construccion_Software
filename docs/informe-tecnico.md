@@ -1,12 +1,12 @@
 # Informe técnico: SocioClub
 
-> BORRADOR. Quedan marcadores `[COMPLETAR: ...]` (grupo, integrantes, enlace al repositorio y conclusiones propias del equipo). Antes de entregar el PDF (`TPI_SocioClub_GrupoN.pdf`), la primera página debe llevar el enlace al repositorio.
+> BORRADOR. Quedan marcadores `[COMPLETAR: ...]` (grupo, integrantes y conclusiones propias del equipo). Al completarlos, borrar este aviso y exportar el PDF con el nombre `TPI_SocioClub_GrupoN.pdf`.
 
 Taller de Construcción de Software, Universidad Siglo 21. Trabajo Práctico Integrador.
 
 - Grupo N.º: [COMPLETAR: número de grupo]
 - Integrantes: [COMPLETAR: nombres y apellidos de los integrantes]
-- Repositorio: [COMPLETAR: enlace al repositorio de GitHub]
+- Repositorio: https://github.com/naimcorujo2003/TP_Taller_Construccion_Software
 
 ## 1. Descripción de la solución
 
@@ -195,7 +195,7 @@ En los casos 2 a 6 la app muestra en pantalla el mensaje devuelto por la API. Ta
 | Alcance | Herramienta | Resultado |
 |---|---|---|
 | Backend (servicio, repositorios, controladores MVC y REST) | `mvn test` (JUnit, Mockito, MockMvc, H2 en memoria solo para pruebas) | 72 pruebas en verde |
-| API REST | Colección Postman | 26/26 correctas (ejecución de una sesión anterior) |
+| API REST | Colección Postman | 26 requests y 38 aserciones, 0 fallas (newman, 2026-11-11; los 409 verifican código, `regla` y mensaje exacto) |
 | Sitio público | Jest + jsdom | 99 pruebas en verde |
 | App React (`app-socios`) | Jest + React Testing Library | 19 pruebas en verde |
 | Sistema | Casos manuales de la tabla 6.1 | 6 de 6 con el resultado esperado |
