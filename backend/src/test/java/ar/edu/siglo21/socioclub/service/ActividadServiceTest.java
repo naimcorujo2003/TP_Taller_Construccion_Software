@@ -1,6 +1,8 @@
 package ar.edu.siglo21.socioclub.service;
 
 import ar.edu.siglo21.socioclub.dto.ActividadDto;
+import ar.edu.siglo21.socioclub.dto.OcupacionActividad;
+import ar.edu.siglo21.socioclub.dto.PanelOcupacion;
 import ar.edu.siglo21.socioclub.exception.RecursoNoEncontradoException;
 import ar.edu.siglo21.socioclub.exception.ReglaNegocioException;
 import ar.edu.siglo21.socioclub.model.Actividad;
@@ -114,5 +116,64 @@ class ActividadServiceTest {
 
         assertThatThrownBy(() -> service.crear(yoga)).isInstanceOf(ReglaNegocioException.class);
         verify(actividadRepository, never()).save(yoga);
+    }
+
+    private Actividad actividadConCupo(long id, String nombre, int cupo) {
+        Actividad a = new Actividad();
+        a.setId(id);
+        a.setNombre(nombre);
+        a.setDisciplina("Disc");
+        a.setCupoMaximo(cupo);
+        return a;
+    }
+
+    private OcupacionActividad ocupacionDe(int ocupados, int cupo) {
+        Actividad a = actividadConCupo(1L, "A", cupo);
+        when(actividadRepository.findAll()).thenReturn(List.of(a));
+        when(inscripcionRepository.contarPorActividadYEstado(1L, EstadoInscripcion.ACTIVA)).thenReturn((long) ocupados);
+        return service.panelOcupacion().actividades().get(0);
+    }
+
+    @Test
+    void ocupacionBajoOchentaPorCientoEstaDisponible() {
+        OcupacionActividad o = ocupacionDe(79, 100);
+        assertThat(o.porcentaje()).isEqualTo(79);
+        assertThat(o.estado()).isEqualTo("Disponible");
+    }
+
+    @Test
+    void ocupacionDesdeOchentaPorCientoEsCasiCompleta() {
+        OcupacionActividad o = ocupacionDe(80, 100);
+        assertThat(o.porcentaje()).isEqualTo(80);
+        assertThat(o.estado()).isEqualTo("Casi completa");
+    }
+
+    @Test
+    void ocupacionNoventaYNuevePorCientoSigueCasiCompleta() {
+        OcupacionActividad o = ocupacionDe(99, 100);
+        assertThat(o.porcentaje()).isEqualTo(99);
+        assertThat(o.estado()).isEqualTo("Casi completa");
+    }
+
+    @Test
+    void ocupacionCienPorCientoEstaCompleta() {
+        OcupacionActividad o = ocupacionDe(100, 100);
+        assertThat(o.porcentaje()).isEqualTo(100);
+        assertThat(o.estado()).isEqualTo("Completa");
+    }
+
+    @Test
+    void panelOcupacionSumaTotalesDeOcupadosYCupos() {
+        Actividad a = actividadConCupo(1L, "A", 10);
+        Actividad b = actividadConCupo(2L, "B", 20);
+        when(actividadRepository.findAll()).thenReturn(List.of(a, b));
+        when(inscripcionRepository.contarPorActividadYEstado(1L, EstadoInscripcion.ACTIVA)).thenReturn(4L);
+        when(inscripcionRepository.contarPorActividadYEstado(2L, EstadoInscripcion.ACTIVA)).thenReturn(6L);
+
+        PanelOcupacion panel = service.panelOcupacion();
+
+        assertThat(panel.totalOcupados()).isEqualTo(10);
+        assertThat(panel.totalCupos()).isEqualTo(30);
+        assertThat(panel.actividades()).hasSize(2);
     }
 }

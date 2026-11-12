@@ -74,6 +74,7 @@ mvn spring-boot:run
 Al arrancar crea las tablas y carga los datos iniciales (las 8 actividades del club y los socios de prueba). Cada arranque **recrea** las tablas.
 
 - Backoffice de secretaría: <http://localhost:8080/actividades>
+- Panel de ocupación (extra): <http://localhost:8080/ocupacion>
 - API REST: <http://localhost:8080/api/actividades>
 
 ### 3. Sitio público

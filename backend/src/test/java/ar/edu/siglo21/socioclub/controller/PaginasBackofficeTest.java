@@ -119,4 +119,15 @@ class PaginasBackofficeTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/actividades/1/inscriptos"));
     }
+
+    @Test
+    void panelDeOcupacionMuestraEstadosDeLosDatosIniciales() throws Exception {
+        // seed: Yoga 15/15 -> Completa, Ajedrez 15/16 (93%) -> Casi completa
+        mvc.perform(get("/ocupacion"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("Panel de ocupación")))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("Completa")))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("Casi completa")))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("93%")));
+    }
 }

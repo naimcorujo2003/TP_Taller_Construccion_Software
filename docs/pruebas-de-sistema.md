@@ -19,10 +19,10 @@ En los casos 2 a 6 la app muestra el mensaje devuelto por la API en pantalla.
 
 | Alcance | Herramienta | Resultado |
 |---|---|---|
-| Backend (servicio, repositorios, controladores MVC y REST) | `mvn test` (JUnit, Mockito, MockMvc) | 72 pruebas en verde |
+| Backend (servicio, repositorios, controladores MVC y REST) | `mvn test` (JUnit, Mockito, MockMvc) | 78 pruebas en verde (incluye las del panel de ocupación) |
 | API REST | Colección Postman `backend/postman/SocioClub.postman_collection.json` | 26 requests y 38 aserciones, 0 fallas (newman, 2026-11-11; los 409 verifican código, `regla` y mensaje exacto) |
 | Sitio público | Jest + jsdom | 99 pruebas en verde |
-| App React (`app-socios`) | Jest + React Testing Library | 19 pruebas en verde: 13 de utilidades, más las de `ResumenCuota`, `TarjetaActividad` y `DetalleActividad` |
+| App React (`app-socios`) | Jest + React Testing Library | 22 pruebas en verde: 13 de utilidades, más las de `ResumenCuota`, `TarjetaActividad`, `DetalleActividad` y la persistencia de sesión |
 
 ## CORS
 

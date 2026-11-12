@@ -1,6 +1,8 @@
 package ar.edu.siglo21.socioclub.service;
 
 import ar.edu.siglo21.socioclub.dto.ActividadDto;
+import ar.edu.siglo21.socioclub.dto.OcupacionActividad;
+import ar.edu.siglo21.socioclub.dto.PanelOcupacion;
 import ar.edu.siglo21.socioclub.exception.RecursoNoEncontradoException;
 import ar.edu.siglo21.socioclub.exception.ReglaNegocioException;
 import ar.edu.siglo21.socioclub.model.Actividad;
@@ -78,6 +80,25 @@ public class ActividadService {
     /** Places left = cupoMaximo minus ACTIVA inscriptions (BAJA ones free their place). */
     public int cupoDisponible(Actividad actividad) {
         return actividad.getCupoMaximo() - (int) contarActivas(actividad);
+    }
+
+    /** Occupancy per actividad (one count query each, like the list page) plus club-wide totals. */
+    @Transactional(readOnly = true)
+    public PanelOcupacion panelOcupacion() {
+        List<OcupacionActividad> filas = actividadRepository.findAll().stream().map(this::ocupacionDe).toList();
+        int totalOcupados = filas.stream().mapToInt(OcupacionActividad::ocupados).sum();
+        int totalCupos = filas.stream().mapToInt(OcupacionActividad::cupoMaximo).sum();
+        return new PanelOcupacion(filas, totalOcupados, totalCupos);
+    }
+
+    private OcupacionActividad ocupacionDe(Actividad actividad) {
+        int ocupados = (int) contarActivas(actividad);
+        int cupo = actividad.getCupoMaximo();
+        // Floor division so 79.9% is never promoted to the 80% threshold; no capacity counts as full
+        int porcentaje = cupo <= 0 ? 100 : Math.min(100, ocupados * 100 / cupo);
+        String estado = porcentaje >= 100 ? "Completa" : porcentaje >= 80 ? "Casi completa" : "Disponible";
+        return new OcupacionActividad(actividad.getId(), actividad.getNombre(), actividad.getDisciplina(),
+                ocupados, cupo, porcentaje, estado);
     }
 
     private void validarRangoDeEdades(Actividad actividad) {

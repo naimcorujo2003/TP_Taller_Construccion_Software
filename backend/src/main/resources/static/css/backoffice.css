@@ -57,6 +57,12 @@ button.enlace.peligro { color: var(--rojo); }
 .etiqueta { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: .85rem; font-weight: 600; }
 .etiqueta.ok { background: var(--verde-claro); color: var(--verde); }
 .etiqueta.error { background: var(--rojo-claro); color: var(--rojo); }
+.etiqueta.aviso { background: #fff3cd; color: #8a6100; }
+.totales { margin: 0 0 1rem; font-size: 1.05rem; }
+.barra-ocupacion { width: 160px; height: 10px; background: #e3e9e6; border-radius: 999px; overflow: hidden; display: inline-block; vertical-align: middle; margin-right: 8px; }
+.barra-ocupacion-relleno { height: 100%; background: var(--verde); }
+.barra-ocupacion-relleno.casi { background: #e0a100; }
+.barra-ocupacion-relleno.completa { background: var(--rojo); }
 
 .resumen { color: var(--gris); }
 
